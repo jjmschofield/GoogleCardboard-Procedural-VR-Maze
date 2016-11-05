@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Position2D
+public class Position2D //TODO - requires an equality comparer
 {
     public int x;
     public int y;
