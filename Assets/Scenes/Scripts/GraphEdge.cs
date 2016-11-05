@@ -3,12 +3,12 @@ using System.Collections;
 
 namespace ProceduralMaze
 {
-    public class MazeEdge 
+    public class GrpahEdge 
     {
-        public Position2D start;
-        public Position2D end;
+        public GraphNode start;
+        public GraphNode end;
 
-        public MazeEdge(Position2D start, Position2D end)
+        public GrpahEdge(GraphNode start, GraphNode end)
         {
             this.start = start;
             this.end = end;

@@ -4,21 +4,21 @@ using System.Collections.Generic;
 
 namespace ProceduralMaze
 {
-    public class MazeNode
+    public class GraphNode
     {
 
         public readonly int x;
         public readonly int y;
-        public readonly List<MazeNode> neighbours;
+        public readonly List<GraphNode> neighbours;
 
-        public MazeNode(int _x, int _y)
+        public GraphNode(int _x, int _y)
         {
             x = _x;
             y = _y;
-            neighbours = new List<MazeNode>();
+            neighbours = new List<GraphNode>();
         }
 
-        public void AddNeighbour(MazeNode neigbour)
+        public void AddNeighbour(GraphNode neigbour)
         {
             neighbours.Add(neigbour);
         }

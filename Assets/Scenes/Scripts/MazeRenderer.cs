@@ -15,20 +15,19 @@ namespace ProceduralMaze
             maze = gameObject.GetComponent<Maze>();
         }
 
-
         void OnDrawGizmosSelected()
         {            
             if (drawMazeNodes)
             {
-                foreach (MazeNode node in maze.mazeNodes.nodes)
+                foreach (GraphNode node in maze.mazeNodes.nodes)
                 {                    
-                    Gizmos.DrawSphere(new Vector3(node.x, 0, node.y), 0.25f);                    
+                    Gizmos.DrawSphere(new Vector3(node.x, 0, node.y), 0.15f);                    
                 }                
             }
 
             if (drawEdges)
             {               
-                foreach (MazeEdge edge in maze.mazeEdges.edges)
+                foreach (GrpahEdge edge in maze.mazeEdges.edges)
                 {
                     Gizmos.DrawLine(
                         new Vector3(edge.start.x, 0, edge.start.y),

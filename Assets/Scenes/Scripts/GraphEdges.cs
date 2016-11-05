@@ -4,27 +4,26 @@ using System.Collections.Generic;
 
 namespace ProceduralMaze
 {
-    public class MazeEdges
+    public class GraphEdges
     {
-        MazeNodes nodes;
-        public List<MazeEdge> edges;
+        GraphNodes nodes;
+        public List<GrpahEdge> edges;
         
-        public MazeEdges(MazeNodes nodes) {
+        public GraphEdges(GraphNodes nodes) {
             this.nodes = nodes;
             setEdges();
         }
 
         void setEdges()
         {
-            edges = new List<MazeEdge>();
+            edges = new List<GrpahEdge>();
             
-            foreach(MazeNode node in nodes.nodes)
+            foreach(GraphNode node in nodes.nodes)
             {
-                foreach(MazeNode neighbor in node.neighbours)
-                {                    
-                    Position2D startPos = new Position2D(node.x, node.y);
-                    Position2D endPos = new Position2D(neighbor.x, neighbor.y);
-                    MazeEdge edge = new MazeEdge(startPos, endPos);
+                foreach(GraphNode neighbor in node.neighbours)
+                {                  
+    
+                    GrpahEdge edge = new GrpahEdge(node, neighbor);
 
                     if (!edgeAlreadyExists(edge))
                     {
@@ -34,10 +33,10 @@ namespace ProceduralMaze
             }            
         }
         
-        bool edgeAlreadyExists(MazeEdge edge) //TODO - this works but it's horrible. Maybe there is approach problem?
+        bool edgeAlreadyExists(GrpahEdge edge) //TODO - this works but it's horrible. Maybe there is approach problem?
         {
 
-            foreach(MazeEdge existingEdge in edges)
+            foreach(GrpahEdge existingEdge in edges)
             {                
 
                 if(existingEdge.start.x == edge.start.x && 

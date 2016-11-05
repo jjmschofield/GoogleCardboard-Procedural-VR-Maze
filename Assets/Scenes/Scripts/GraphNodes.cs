@@ -4,13 +4,13 @@ using UnityEngine;
 
 namespace ProceduralMaze
 {
-    public class MazeNodes
+    public class GraphNodes
     {
         public readonly int width;
         public readonly int height;
-        public MazeNode[,] nodes { get; private set; }
+        public GraphNode[,] nodes { get; private set; }
 
-        public MazeNodes(int width, int height)
+        public GraphNodes(int width, int height)
         {
             this.width = width;
             this.height = height;
@@ -20,13 +20,13 @@ namespace ProceduralMaze
 
         void generateNodes()
         {            
-            nodes = new MazeNode[width, height];
+            nodes = new GraphNode[width, height];
 
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < width; y++)
                 {
-                    nodes[x, y] = new MazeNode(x, y);
+                    nodes[x, y] = new GraphNode(x, y);
                 }
             }            
         }
@@ -34,7 +34,7 @@ namespace ProceduralMaze
         void setNeighbours()
         {           
                  
-            foreach (MazeNode node in nodes)
+            foreach (GraphNode node in nodes)
             {                
                 tryAndSetNeighbour(node, node.x, node.y + 1);
                 tryAndSetNeighbour(node, node.x, node.y - 1);
@@ -43,7 +43,7 @@ namespace ProceduralMaze
             }
         }
 
-        void tryAndSetNeighbour(MazeNode node, int x, int y)
+        void tryAndSetNeighbour(GraphNode node, int x, int y)
         {
             if (isPositionWithinBounds(x, y)){
                 node.AddNeighbour(nodes[x, y]);
