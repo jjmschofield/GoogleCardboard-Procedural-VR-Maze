@@ -10,5 +10,6 @@ public class Position2D //TODO - requires an equality comparer
     {
         this.x = x;
         this.y = y;
-    }	
+    }
+    
 }

@@ -54,7 +54,6 @@ namespace ProceduralMaze {
             foreach (var nodeEntry in nodes)
             {
                 GraphNode node = nodeEntry.Value;
-
                 TryAndSetNeighbour(node, node.x, node.y + 1);
                 TryAndSetNeighbour(node, node.x, node.y - 1);
                 TryAndSetNeighbour(node, node.x + 1, node.y);
