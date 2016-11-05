@@ -9,19 +9,11 @@ namespace ProceduralMaze
     {
         public int width = 20;
         public int height = 20;
-        public GraphNodes mazeNodes;
-        public GraphEdges mazeEdges;
-
-        MazeRenderer mazeRenderer;
+        public Graph graph;               
         
         void Start()
         {
-            mazeNodes = new GraphNodes(width, height);
-            mazeEdges = new GraphEdges(mazeNodes);      
-            mazeRenderer = gameObject.GetComponent<MazeRenderer>();
-            generateMaze();
-
-
+            graph = new Graph(width, height);
         }
 
         void Update()
