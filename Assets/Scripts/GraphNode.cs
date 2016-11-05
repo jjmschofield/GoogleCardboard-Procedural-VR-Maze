@@ -11,10 +11,10 @@ namespace ProceduralMaze
         public readonly int y;
         public readonly List<GraphNode> neighbours;
 
-        public GraphNode(int _x, int _y)
+        public GraphNode(int x, int y)
         {
-            x = _x;
-            y = _y;
+            this.x = x;
+            this.y = y;
             neighbours = new List<GraphNode>();
         }
 
