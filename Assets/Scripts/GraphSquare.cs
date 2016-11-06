@@ -32,9 +32,20 @@ namespace ProceduralMaze
             SetEdges();
         }
 
-        public void AddNode(Position2D position)
+        public GraphSquareNode AddNode(Position2D position)
         {
-            nodes.Add(new GraphSquareNode(position.x, position.y));
+            GraphSquareNode existingNode = GetNodeAtPostion(position);
+
+            if(existingNode != null)
+            {
+                GraphSquareNode node = new GraphSquareNode(position.x, position.y);
+                nodes.Add(node);
+                return node;
+            }
+            else
+            {
+                return existingNode;
+            }       
         }
 
         public GraphSquareNode GetNodeAtPostion(Position2D position)
