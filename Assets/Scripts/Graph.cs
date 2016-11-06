@@ -3,84 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ProceduralMaze { 
-    public class Graph {
-        public int x { get; private set; }
-        public int y { get; private set; }
-        public Dictionary<Position2D,GraphNode> nodes { get; private set; }
-        public List<GrpahEdge> edges { get; private set; }
+    public class Graph {       
+        protected List<GraphNode> nodes;
+        protected List<GraphEdge> edges;
 
         //Create an empty Graph
         public Graph() 
         {
-            nodes = new Dictionary<Position2D, GraphNode>();
-            edges = new List<GrpahEdge>();
-        }
-
-        //Create a graph with fixed dimensions and immediately process adjacency and edges
-        public Graph(int width, int height)
-        {
-            nodes = new Dictionary<Position2D, GraphNode>();
-            edges = new List<GrpahEdge>();
-
-            for (int x = 0; x < width; x++)
-            {
-                for (int y = 0; y < width; y++)
-                {
-                    AddNode(new Position2D(x, y));
-                }
-            }
-
-            Update();
-        }
-
-        public void Update()
-        {
-            SetNodeNeighbours();
-            SetEdges();
-        }
-
-        public void AddNode(Position2D position)
-        {
-            nodes[position] = new GraphNode(position.x, position.y);
-        }
-
-        public GraphNode GetNode(Position2D position)
-        {
-            return nodes[position];
+            nodes = new List<GraphNode>();
+            edges = new List<GraphEdge>();
         }        
 
-        void SetNodeNeighbours()
-        {         
-            foreach (var nodeEntry in nodes)
-            {
-                GraphNode node = nodeEntry.Value;
-                TryAndSetNeighbour(node, node.x, node.y + 1);
-                TryAndSetNeighbour(node, node.x, node.y - 1);
-                TryAndSetNeighbour(node, node.x + 1, node.y);
-                TryAndSetNeighbour(node, node.x - 1, node.y);
-            }
+        public void AddNode()
+        {
+            nodes.Add(new GraphNode());
         }
 
-        void TryAndSetNeighbour(GraphNode node, int x, int y)
+        public List<GraphNode> GetNodes()
         {
-            try
-            {
-                node.AddNeighbour(nodes[new Position2D(x, y)]);
-            }
-            catch { }               
+            return nodes;
         }
 
-        void SetEdges()
+        public List<GraphEdge> GetEdges()
         {
-            edges = new List<GrpahEdge>();
+            return edges;
+        }
 
-            foreach (var nodeEntry in nodes)
+        protected void SetEdges()
+        {
+            edges = new List<GraphEdge>();
+
+            foreach (GraphNode node in nodes)
             {
-                GraphNode node = nodeEntry.Value;
+                List<GraphNode> neighbours = node.GetNeighbours();
 
-                foreach (GraphNode neighbor in node.neighbours)
+                foreach (GraphNode neighbor in neighbours)
                 {
-                    GrpahEdge edge = new GrpahEdge(node, neighbor);
+                    GraphEdge edge = new GraphEdge(node, neighbor);
 
                     if (!EdgeAlreadyExists(edge))
                     {
@@ -90,24 +49,20 @@ namespace ProceduralMaze {
             }
         }
 
-        bool EdgeAlreadyExists(GrpahEdge edge) //TODO - this works but it's horrible. Maybe there is approach problem?
+        bool EdgeAlreadyExists(GraphEdge edge)
         {
 
-            foreach (GrpahEdge existingEdge in edges)
+            foreach (GraphEdge existingEdge in edges)
             {
 
-                if (existingEdge.start.x == edge.start.x &&
-                    existingEdge.end.x == edge.end.x &&
-                    existingEdge.start.y == edge.start.y &&
-                    existingEdge.end.y == edge.end.y)
+                if (existingEdge.start == edge.start &&
+                    existingEdge.end == edge.end)
                 {
                     return true;
                 }
 
-                if (existingEdge.start.x == edge.end.x &&
-                   existingEdge.end.x == edge.start.x &&
-                   existingEdge.start.y == edge.end.y &&
-                   existingEdge.end.y == edge.start.y)
+                if (existingEdge.start == edge.end &&
+                      existingEdge.end == edge.start)
                 {
                     return true;
                 }

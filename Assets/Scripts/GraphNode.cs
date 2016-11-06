@@ -5,22 +5,22 @@ using System.Collections.Generic;
 namespace ProceduralMaze
 {
     public class GraphNode
-    {
+    {        
+        protected List<GraphNode> neighbours;
 
-        public readonly int x;
-        public readonly int y;
-        public readonly List<GraphNode> neighbours;
-
-        public GraphNode(int x, int y)
+        public GraphNode()
         {
-            this.x = x;
-            this.y = y;
             neighbours = new List<GraphNode>();
         }
 
         public void AddNeighbour(GraphNode neigbour)
         {
             neighbours.Add(neigbour);
+        }
+
+        public List<GraphNode> GetNeighbours()
+        {
+            return neighbours;
         }
 
     }

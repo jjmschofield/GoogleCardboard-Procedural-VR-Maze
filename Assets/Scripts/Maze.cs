@@ -9,11 +9,11 @@ namespace ProceduralMaze
     {
         public int width = 20;
         public int height = 20;
-        public Graph graph;               
+        public GraphSquare graph;               
         
         void Start()
         {
-            graph = new Graph(width, height);
+            graph = new GraphSquare(width, height);
         }
 
         void Update()

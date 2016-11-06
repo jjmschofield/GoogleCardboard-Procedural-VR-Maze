@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace ProceduralMaze
 {
@@ -19,21 +20,27 @@ namespace ProceduralMaze
         {            
             if (drawMazeNodes)
             {
-                foreach (var nodeEntry in maze.graph.nodes)
-                {
-                    GraphNode node = nodeEntry.Value;
+                var nodes = maze.graph.GetNodes();
 
+                foreach (GraphSquareNode node in nodes)
+                {                   
                     Gizmos.DrawSphere(new Vector3(node.x, 0, node.y), 0.15f);                    
                 }                
             }
 
             if (drawEdges)
-            {               
-                foreach (GrpahEdge edge in maze.graph.edges)
+            {
+                List<GraphEdge> edges = maze.graph.GetEdges();
+
+                foreach (GraphEdge edge in edges)
                 {
+
+                    GraphSquareNode startNode = edge.start as GraphSquareNode;
+                    GraphSquareNode endNode = edge.end as GraphSquareNode;
+
                     Gizmos.DrawLine(
-                        new Vector3(edge.start.x, 0, edge.start.y),
-                        new Vector3(edge.end.x, 0, edge.end.y)
+                        new Vector3(startNode.x, 0, startNode.y),
+                        new Vector3(endNode.x, 0, endNode.y)
                         );
                 }
             }
