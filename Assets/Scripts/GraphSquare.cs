@@ -40,7 +40,7 @@ namespace ProceduralMaze
         {
             GraphSquareNode existingNode = GetNodeAtPostion(position);
 
-            if(existingNode != null)
+            if(existingNode == null)
             {
                 GraphSquareNode node = new GraphSquareNode(position);
                 nodes.Add(node);
