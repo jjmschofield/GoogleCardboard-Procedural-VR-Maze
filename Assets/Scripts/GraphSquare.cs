@@ -6,9 +6,13 @@ using System.Collections.Generic;
 namespace ProceduralMaze
 {
     public class GraphSquare : Graph
-    {
-        public int x { get; private set; }
-        public int y { get; private set; }        
+    { 
+        
+        public GraphSquare()
+        {
+            nodes = new List<GraphNode>();
+            edges = new List<GraphEdge>();
+        } 
         
         public GraphSquare(int width, int height)
         {
@@ -38,7 +42,7 @@ namespace ProceduralMaze
 
             if(existingNode != null)
             {
-                GraphSquareNode node = new GraphSquareNode(position.x, position.y);
+                GraphSquareNode node = new GraphSquareNode(position);
                 nodes.Add(node);
                 return node;
             }
