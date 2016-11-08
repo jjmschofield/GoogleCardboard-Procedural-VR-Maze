@@ -19,27 +19,21 @@ namespace ProceduralMaze
         }
 
         void OnDrawGizmos()
-        {            
+        {
+
+            Vector3 wallOffset = new Vector3(0.5F, 0, 0.5F);
+
             if (drawMazeNodes)
             {
+                Gizmos.color = Color.grey;
+
                 var nodes = maze.mazeNodeGraph.GetNodes();
 
                 foreach (PositionalGraphNode node in nodes)
                 {                   
                     Gizmos.DrawSphere(node.position, 0.15f);                    
                 }                
-            }
-
-            if (drawWallNodes)
-            {
-                var nodes = maze.mazeWallGraph.GetNodes();
-                Vector3 offset = new Vector3(0.5F, 0, 0.5F);
-
-                foreach (PositionalGraphNode node in nodes)
-                {
-                    Gizmos.DrawSphere(node.position - offset, 0.1f);
-                }
-            }
+            }         
 
             if (drawMazeConnections)
             {
@@ -51,14 +45,29 @@ namespace ProceduralMaze
                 }
             }
 
+            if (drawWallNodes)
+            {
+
+                Gizmos.color = Color.red;
+
+                var nodes = maze.mazeWallGraph.GetNodes();
+
+
+                foreach (PositionalGraphNode node in nodes)
+                {
+                    Gizmos.DrawSphere(node.position - wallOffset, 0.1f);
+                }
+            }
 
             if (drawWallConnections)
             {
+                Gizmos.color = Color.red;
+
                 List<GraphConnection<PositionalGraphNode>> connections = maze.mazeWallGraph.GetConnections();
 
                 foreach (GraphConnection<PositionalGraphNode> connection in connections)
                 {
-                    Gizmos.DrawLine(connection.start.position, connection.end.position);
+                    Gizmos.DrawLine(connection.start.position - wallOffset, connection.end.position - wallOffset);
                 }
             }
         }
