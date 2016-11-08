@@ -32,8 +32,7 @@ namespace ProceduralMaze
 
         public void Update()
         {
-            SetNodeNeighbours();
-            ConnectAdjacentNodes();
+            SetNodeNeighbours();            
         }        
 
         public PositionalGraphNode AddNode(Position2D position)
