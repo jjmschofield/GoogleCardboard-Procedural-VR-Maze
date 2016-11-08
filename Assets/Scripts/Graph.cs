@@ -5,13 +5,13 @@ using System.Collections.Generic;
 namespace ProceduralMaze { 
     public class Graph<T> where T : GraphNode, new(){       
         protected List<T> nodes;
-        protected List<GraphEdge<T>> edges;
+        protected List<GraphConnection<T>> edges;
 
         //Create an empty Graph
         public Graph() 
         {
             nodes = new List<T>();
-            edges = new List<GraphEdge<T>>();
+            edges = new List<GraphConnection<T>>();
         }        
 
         public void AddNode()
@@ -24,14 +24,14 @@ namespace ProceduralMaze {
             return nodes;
         }
 
-        public List<GraphEdge<T>> GetEdges()
+        public List<GraphConnection<T>> GetEdges()
         {
             return edges;
         }
 
         protected void SetEdges()
         {
-            edges = new List<GraphEdge<T>>();
+            edges = new List<GraphConnection<T>>();
 
             foreach (T node in nodes)
             {
@@ -39,7 +39,7 @@ namespace ProceduralMaze {
 
                 foreach (T neighbor in neighbours)
                 {
-                    GraphEdge<T> edge = new GraphEdge<T>(node, neighbor);
+                    GraphConnection<T> edge = new GraphConnection<T>(node, neighbor);
 
                     if (!EdgeAlreadyExists(edge))
                     {
@@ -49,10 +49,10 @@ namespace ProceduralMaze {
             }
         }
 
-        bool EdgeAlreadyExists(GraphEdge<T> edge)
+        bool EdgeAlreadyExists(GraphConnection<T> edge)
         {
 
-            foreach (GraphEdge<T> existingEdge in edges)
+            foreach (GraphConnection<T> existingEdge in edges)
             {
 
                 if (existingEdge.start == edge.start &&
