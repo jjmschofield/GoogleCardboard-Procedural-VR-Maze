@@ -13,7 +13,7 @@ namespace ProceduralMaze
             connections = new List<GraphConnection<PositionalGraphNode>>();
         } 
         
-        public PositionalGraph(int width, int height)
+        public PositionalGraph(int width, int height, float spacing = 1)
         {
             nodes = new List<PositionalGraphNode>();
             connections = new List<GraphConnection<PositionalGraphNode>>();
@@ -22,7 +22,7 @@ namespace ProceduralMaze
             {
                 for (int y = 0; y < width; y++)
                 {
-                    AddNode(new Vector3(x, 0 ,y));
+                    AddNode(new Vector3(x * spacing, 0 , y * spacing));
                 }
             }
 
@@ -65,7 +65,7 @@ namespace ProceduralMaze
             return null;
         }
 
-        void SetNodeNeighbours()
+        void SetNodeNeighbours() //TODO - this needs to a sweep to find all nodes within a given sqrMagnitude
         {
             foreach (PositionalGraphNode node in nodes)
             {
