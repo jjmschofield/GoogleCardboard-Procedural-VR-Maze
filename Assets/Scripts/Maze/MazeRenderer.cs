@@ -9,7 +9,8 @@ namespace ProceduralMaze
     {
         public bool drawMazeNodes = false;
         public bool drawWallNodes = false;
-        public bool drawEdges = false;
+        public bool drawMazeConnections = false;
+        public bool drawWallConnections = false;
         Maze maze;
 
         void Start()
@@ -31,16 +32,33 @@ namespace ProceduralMaze
 
             if (drawWallNodes)
             {
-                var nodes = maze.mazeWallGraph.GetNodes();                    
+                var nodes = maze.mazeWallGraph.GetNodes();
+                Vector3 offset = new Vector3(0.5F, 0, 0.5F);
+
+                foreach (PositionalGraphNode node in nodes)
+                {
+                    Gizmos.DrawSphere(node.position - offset, 0.1f);
+                }
             }
 
-            if (drawEdges)
+            if (drawMazeConnections)
             {
-                List<GraphConnection<PositionalGraphNode>> edges = maze.mazeNodeGraph.GetConnections();
+                List<GraphConnection<PositionalGraphNode>> connections = maze.mazeNodeGraph.GetConnections();
 
-                foreach (GraphConnection<PositionalGraphNode> edge in edges)
+                foreach (GraphConnection<PositionalGraphNode> connection in connections)
                 {                   
-                    Gizmos.DrawLine(edge.start.position, edge.end.position);
+                    Gizmos.DrawLine(connection.start.position, connection.end.position);
+                }
+            }
+
+
+            if (drawWallConnections)
+            {
+                List<GraphConnection<PositionalGraphNode>> connections = maze.mazeWallGraph.GetConnections();
+
+                foreach (GraphConnection<PositionalGraphNode> connection in connections)
+                {
+                    Gizmos.DrawLine(connection.start.position, connection.end.position);
                 }
             }
         }

@@ -15,8 +15,9 @@ namespace ProceduralMaze
         void Start()
         {
             mazeNodeGraph = new PositionalGraph(width, height);
-            mazeNodeGraph.ConnectNeighbourNodes();            
-            mazeWallGraph = new PositionalGraph();         
+                        
+            mazeWallGraph = new PositionalGraph(width + 1 , height + 1);
+            mazeWallGraph.ConnectNeighbourNodes();
         }
 
         void Update()
