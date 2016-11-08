@@ -9,14 +9,11 @@ namespace ProceduralMaze
     {        
         public PositionalGraph()
         {
-            nodes = new List<PositionalGraphNode>();
-            connections = new List<GraphConnection<PositionalGraphNode>>();
+          
         } 
         
         public PositionalGraph(int width, int height, float spacing = 1)
-        {
-            nodes = new List<PositionalGraphNode>();
-            connections = new List<GraphConnection<PositionalGraphNode>>();
+        {           
 
             for (int x = 0; x < width; x++)
             {
