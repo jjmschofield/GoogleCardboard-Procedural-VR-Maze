@@ -4,19 +4,19 @@ using System.Collections.Generic;
 
 namespace ProceduralMaze
 {
-    public class GraphSquareNode : GraphNode
+    public class PositionalGraphNode : GraphNode
     {
 
         public readonly int x;
         public readonly int y;        
 
-        public GraphSquareNode()
+        public PositionalGraphNode()
         {
             x = 0;
             y = 0;
         }
 
-        public GraphSquareNode(Position2D position)
+        public PositionalGraphNode(Position2D position)
         {
             this.x = position.x;
             this.y = position.y;

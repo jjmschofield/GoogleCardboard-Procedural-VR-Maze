@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace ProceduralMaze
 {
-    public class GraphSquare : Graph<GraphSquareNode>
+    public class PositionalGraph : Graph<PositionalGraphNode>
     {               
 
-        public GraphSquare()
+        public PositionalGraph()
         {
-            nodes = new List<GraphSquareNode>();
-            connections = new List<GraphConnection<GraphSquareNode>>();
+            nodes = new List<PositionalGraphNode>();
+            connections = new List<GraphConnection<PositionalGraphNode>>();
         } 
         
-        public GraphSquare(int width, int height)
+        public PositionalGraph(int width, int height)
         {
-            nodes = new List<GraphSquareNode>();
-            connections = new List<GraphConnection<GraphSquareNode>>();
+            nodes = new List<PositionalGraphNode>();
+            connections = new List<GraphConnection<PositionalGraphNode>>();
 
             for (int x = 0; x < width; x++)
             {
@@ -36,13 +36,13 @@ namespace ProceduralMaze
             ConnectAdjacentNodes();
         }        
 
-        public GraphSquareNode AddNode(Position2D position)
+        public PositionalGraphNode AddNode(Position2D position)
         {
-            GraphSquareNode existingNode = GetNodeAtPostion(position);
+            PositionalGraphNode existingNode = GetNodeAtPostion(position);
 
             if(existingNode == null)
             {
-                GraphSquareNode node = new GraphSquareNode(position);
+                PositionalGraphNode node = new PositionalGraphNode(position);
                 nodes.Add(node);
                 return node;
             }
@@ -52,11 +52,11 @@ namespace ProceduralMaze
             }       
         }
 
-        public GraphSquareNode GetNodeAtPostion(Position2D position)
+        public PositionalGraphNode GetNodeAtPostion(Position2D position)
         {
             for (var i = 0; i < nodes.Count; i++)
             {
-                GraphSquareNode node = nodes[i] as GraphSquareNode;
+                PositionalGraphNode node = nodes[i] as PositionalGraphNode;
 
                 if (node.x == position.x && node.y == position.y)
                 {
@@ -69,7 +69,7 @@ namespace ProceduralMaze
 
         void SetNodeNeighbours()
         {
-            foreach (GraphSquareNode node in nodes)
+            foreach (PositionalGraphNode node in nodes)
             {
                 TryAndSetNeighbour(node, node.x, node.y + 1);
                 TryAndSetNeighbour(node, node.x, node.y - 1);
@@ -78,9 +78,9 @@ namespace ProceduralMaze
             }
         }
 
-        void TryAndSetNeighbour(GraphSquareNode node, int x, int y)
+        void TryAndSetNeighbour(PositionalGraphNode node, int x, int y)
         {
-            GraphSquareNode neighbour = GetNodeAtPostion(new Position2D(x, y));
+            PositionalGraphNode neighbour = GetNodeAtPostion(new Position2D(x, y));
 
             if(neighbour != null)
             {
