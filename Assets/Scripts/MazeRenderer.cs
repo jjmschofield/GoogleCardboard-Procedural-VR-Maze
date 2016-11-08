@@ -8,6 +8,7 @@ namespace ProceduralMaze
     public class MazeRenderer : MonoBehaviour
     {
         public bool drawMazeNodes = false;
+        public bool drawWallNodes = false;
         public bool drawEdges = false;
         Maze maze;
 
@@ -20,23 +21,28 @@ namespace ProceduralMaze
         {            
             if (drawMazeNodes)
             {
-                var nodes = maze.graph.GetNodes();
+                var nodes = maze.mazeNodeGraph.GetNodes();
 
-                foreach (GraphSquareNode node in nodes)
+                foreach (PositionalGraphNode node in nodes)
                 {                   
                     Gizmos.DrawSphere(new Vector3(node.x, 0, node.y), 0.15f);                    
                 }                
             }
 
+            if (drawWallNodes)
+            {
+                var nodes = maze.mazeWallGraph.GetNodes();                    
+            }
+
             if (drawEdges)
             {
-                List<GraphEdge> edges = maze.graph.GetEdges();
+                List<GraphConnection<PositionalGraphNode>> edges = maze.mazeNodeGraph.GetConnections();
 
-                foreach (GraphEdge edge in edges)
+                foreach (GraphConnection<PositionalGraphNode> edge in edges)
                 {
 
-                    GraphSquareNode startNode = edge.start as GraphSquareNode;
-                    GraphSquareNode endNode = edge.end as GraphSquareNode;
+                    PositionalGraphNode startNode = edge.start;
+                    PositionalGraphNode endNode = edge.end;
 
                     Gizmos.DrawLine(
                         new Vector3(startNode.x, 0, startNode.y),
