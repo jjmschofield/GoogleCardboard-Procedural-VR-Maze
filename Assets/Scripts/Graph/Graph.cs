@@ -14,9 +14,11 @@ namespace ProceduralMaze {
             connections = new List<GraphConnection<T>>();
         }        
 
-        public void AddNode()
+        public T AddNode()
         {
-            nodes.Add(new T());
+            T node = new T();
+            nodes.Add(node);
+            return node;
         }
 
         public List<T> GetNodes()
