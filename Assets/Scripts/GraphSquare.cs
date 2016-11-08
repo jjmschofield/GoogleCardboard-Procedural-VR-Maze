@@ -11,13 +11,13 @@ namespace ProceduralMaze
         public GraphSquare()
         {
             nodes = new List<GraphSquareNode>();
-            edges = new List<GraphConnection<GraphSquareNode>>();
+            connections = new List<GraphConnection<GraphSquareNode>>();
         } 
         
         public GraphSquare(int width, int height)
         {
             nodes = new List<GraphSquareNode>();
-            edges = new List<GraphConnection<GraphSquareNode>>();
+            connections = new List<GraphConnection<GraphSquareNode>>();
 
             for (int x = 0; x < width; x++)
             {
@@ -33,7 +33,7 @@ namespace ProceduralMaze
         public void Update()
         {
             SetNodeNeighbours();
-            SetEdges();
+            ConnectAdjacentNodes();
         }        
 
         public GraphSquareNode AddNode(Position2D position)
