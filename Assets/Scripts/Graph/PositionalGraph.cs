@@ -6,8 +6,7 @@ using System.Collections.Generic;
 namespace ProceduralMaze
 {
     public class PositionalGraph : Graph<PositionalGraphNode>
-    {               
-
+    {        
         public PositionalGraph()
         {
             nodes = new List<PositionalGraphNode>();
@@ -23,7 +22,7 @@ namespace ProceduralMaze
             {
                 for (int y = 0; y < width; y++)
                 {
-                    AddNode(new Position2D(x, y));
+                    AddNode(new Vector3(x, 0 ,y));
                 }
             }
 
@@ -35,7 +34,7 @@ namespace ProceduralMaze
             SetNodeNeighbours();            
         }        
 
-        public PositionalGraphNode AddNode(Position2D position)
+        public PositionalGraphNode AddNode(Vector3 position)
         {
             PositionalGraphNode existingNode = GetNodeAtPostion(position);
 
@@ -51,13 +50,13 @@ namespace ProceduralMaze
             }       
         }
 
-        public PositionalGraphNode GetNodeAtPostion(Position2D position)
+        public PositionalGraphNode GetNodeAtPostion(Vector3 position)
         {
             for (var i = 0; i < nodes.Count; i++)
             {
                 PositionalGraphNode node = nodes[i] as PositionalGraphNode;
 
-                if (node.x == position.x && node.y == position.y)
+                if (node.position == position)
                 {
                     return node;
                 }
@@ -70,16 +69,16 @@ namespace ProceduralMaze
         {
             foreach (PositionalGraphNode node in nodes)
             {
-                TryAndSetNeighbour(node, node.x, node.y + 1);
-                TryAndSetNeighbour(node, node.x, node.y - 1);
-                TryAndSetNeighbour(node, node.x + 1, node.y);
-                TryAndSetNeighbour(node, node.x - 1, node.y);
+                TryAndSetNeighbour(node, node.position.x, node.position.z + 1);
+                TryAndSetNeighbour(node, node.position.x, node.position.z - 1);
+                TryAndSetNeighbour(node, node.position.x + 1, node.position.z);
+                TryAndSetNeighbour(node, node.position.x - 1, node.position.z);
             }
         }
 
-        void TryAndSetNeighbour(PositionalGraphNode node, int x, int y)
+        void TryAndSetNeighbour(PositionalGraphNode node, float x, float y)
         {
-            PositionalGraphNode neighbour = GetNodeAtPostion(new Position2D(x, y));
+            PositionalGraphNode neighbour = GetNodeAtPostion(new Vector3(x, 0, y));
 
             if(neighbour != null)
             {

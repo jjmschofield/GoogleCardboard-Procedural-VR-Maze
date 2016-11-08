@@ -25,7 +25,7 @@ namespace ProceduralMaze
 
                 foreach (PositionalGraphNode node in nodes)
                 {                   
-                    Gizmos.DrawSphere(new Vector3(node.x, 0, node.y), 0.15f);                    
+                    Gizmos.DrawSphere(node.position, 0.15f);                    
                 }                
             }
 
@@ -39,15 +39,8 @@ namespace ProceduralMaze
                 List<GraphConnection<PositionalGraphNode>> edges = maze.mazeNodeGraph.GetConnections();
 
                 foreach (GraphConnection<PositionalGraphNode> edge in edges)
-                {
-
-                    PositionalGraphNode startNode = edge.start;
-                    PositionalGraphNode endNode = edge.end;
-
-                    Gizmos.DrawLine(
-                        new Vector3(startNode.x, 0, startNode.y),
-                        new Vector3(endNode.x, 0, endNode.y)
-                        );
+                {                   
+                    Gizmos.DrawLine(edge.start.position, edge.end.position);
                 }
             }
         }

@@ -6,20 +6,16 @@ namespace ProceduralMaze
 {
     public class PositionalGraphNode : GraphNode
     {
-
-        public readonly int x;
-        public readonly int y;        
+        public readonly Vector3 position;        
 
         public PositionalGraphNode()
         {
-            x = 0;
-            y = 0;
+            position = new Vector3(0, 0, 0);
         }
 
-        public PositionalGraphNode(Position2D position)
+        public PositionalGraphNode(Vector3 position)
         {
-            this.x = position.x;
-            this.y = position.y;
+            this.position = position;
             neighbours = new List<GraphNode>();
         }    
     }
