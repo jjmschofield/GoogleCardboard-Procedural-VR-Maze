@@ -9,11 +9,15 @@ namespace ProceduralMaze
     {
         public int width = 20;
         public int height = 20;
-        public GraphSquare graph;               
+        public PositionalGraph mazeNodeGraph;
+        public PositionalGraph mazeWallGraph;               
         
         void Start()
         {
-            graph = new GraphSquare(width, height);
+            mazeNodeGraph = new PositionalGraph(width, height);
+                        
+            mazeWallGraph = new PositionalGraph(width + 1 , height + 1);
+            mazeWallGraph.ConnectNeighbourNodes();
         }
 
         void Update()

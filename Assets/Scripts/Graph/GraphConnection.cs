@@ -3,12 +3,12 @@ using System.Collections;
 
 namespace ProceduralMaze
 {
-    public class GraphEdge 
+    public class GraphConnection<T> where T : GraphNode
     {
-        public GraphNode start;
-        public GraphNode end;
+        public T start;
+        public T end;
 
-        public GraphEdge(GraphNode start, GraphNode end)
+        public GraphConnection(T start, T end)
         {
             this.start = start;
             this.end = end;
