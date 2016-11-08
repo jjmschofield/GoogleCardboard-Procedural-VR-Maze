@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace ProceduralMaze
 {
-    public class GraphSquare : Graph
-    { 
-        
+    public class GraphSquare : Graph<GraphSquareNode>
+    {               
+
         public GraphSquare()
         {
-            nodes = new List<GraphNode>();
-            edges = new List<GraphEdge>();
+            nodes = new List<GraphSquareNode>();
+            edges = new List<GraphEdge<GraphSquareNode>>();
         } 
         
         public GraphSquare(int width, int height)
         {
-            nodes = new List<GraphNode>();
-            edges = new List<GraphEdge>();
+            nodes = new List<GraphSquareNode>();
+            edges = new List<GraphEdge<GraphSquareNode>>();
 
             for (int x = 0; x < width; x++)
             {
@@ -34,7 +34,7 @@ namespace ProceduralMaze
         {
             SetNodeNeighbours();
             SetEdges();
-        }
+        }        
 
         public GraphSquareNode AddNode(Position2D position)
         {

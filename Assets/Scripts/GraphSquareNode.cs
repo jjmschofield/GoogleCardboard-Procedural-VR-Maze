@@ -10,6 +10,12 @@ namespace ProceduralMaze
         public readonly int x;
         public readonly int y;        
 
+        public GraphSquareNode()
+        {
+            x = 0;
+            y = 0;
+        }
+
         public GraphSquareNode(Position2D position)
         {
             this.x = position.x;

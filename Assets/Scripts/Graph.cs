@@ -3,43 +3,43 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace ProceduralMaze { 
-    public class Graph {       
-        protected List<GraphNode> nodes;
-        protected List<GraphEdge> edges;
+    public class Graph<T> where T : GraphNode, new(){       
+        protected List<T> nodes;
+        protected List<GraphEdge<T>> edges;
 
         //Create an empty Graph
         public Graph() 
         {
-            nodes = new List<GraphNode>();
-            edges = new List<GraphEdge>();
+            nodes = new List<T>();
+            edges = new List<GraphEdge<T>>();
         }        
 
         public void AddNode()
         {
-            nodes.Add(new GraphNode());
+            nodes.Add(new T());
         }
 
-        public List<GraphNode> GetNodes()
+        public List<T> GetNodes()
         {
             return nodes;
         }
 
-        public List<GraphEdge> GetEdges()
+        public List<GraphEdge<T>> GetEdges()
         {
             return edges;
         }
 
         protected void SetEdges()
         {
-            edges = new List<GraphEdge>();
+            edges = new List<GraphEdge<T>>();
 
-            foreach (GraphNode node in nodes)
+            foreach (T node in nodes)
             {
                 List<GraphNode> neighbours = node.GetNeighbours();
 
-                foreach (GraphNode neighbor in neighbours)
+                foreach (T neighbor in neighbours)
                 {
-                    GraphEdge edge = new GraphEdge(node, neighbor);
+                    GraphEdge<T> edge = new GraphEdge<T>(node, neighbor);
 
                     if (!EdgeAlreadyExists(edge))
                     {
@@ -49,10 +49,10 @@ namespace ProceduralMaze {
             }
         }
 
-        bool EdgeAlreadyExists(GraphEdge edge)
+        bool EdgeAlreadyExists(GraphEdge<T> edge)
         {
 
-            foreach (GraphEdge existingEdge in edges)
+            foreach (GraphEdge<T> existingEdge in edges)
             {
 
                 if (existingEdge.start == edge.start &&
