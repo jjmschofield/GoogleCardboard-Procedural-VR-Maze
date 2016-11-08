@@ -31,7 +31,7 @@ namespace ProceduralMaze {
             return connections;
         }
 
-        protected void ConnectAdjacentNodes()
+        public void ConnectNeighbourNodes()
         {
             connections = new List<GraphConnection<T>>();
 
