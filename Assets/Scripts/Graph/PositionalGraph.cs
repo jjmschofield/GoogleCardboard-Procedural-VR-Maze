@@ -62,24 +62,19 @@ namespace ProceduralMaze
             return null;
         }
 
-        void SetNodeNeighbours() //TODO - this needs to a sweep to find all nodes within a given sqrMagnitude
+        public void ConnectNodesWithinDistance(float connectionDistancee) //TODO - this is inefficient 
         {
             foreach (PositionalGraphNode node in nodes)
             {
-                TryAndSetNeighbour(node, node.position.x, node.position.z + 1);
-                TryAndSetNeighbour(node, node.position.x, node.position.z - 1);
-                TryAndSetNeighbour(node, node.position.x + 1, node.position.z);
-                TryAndSetNeighbour(node, node.position.x - 1, node.position.z);
-            }
-        }
+                foreach (PositionalGraphNode comparisonNode in nodes)
+                {
+                    Vector3 vectorDistance = node.position - comparisonNode.position;
 
-        void TryAndSetNeighbour(PositionalGraphNode node, float x, float y)
-        {
-            PositionalGraphNode neighbour = GetNodeAtPostion(new Vector3(x, 0, y));
-
-            if(neighbour != null)
-            {
-                node.AddNeighbour(neighbour);
+                    if (vectorDistance.sqrMagnitude <= connectionDistancee)
+                    {
+                        ConnectNodes(node, comparisonNode);
+                    }
+                }
             }
         }
     }

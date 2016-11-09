@@ -10,16 +10,17 @@ namespace ProceduralMaze
     {
         public int width = 20;
         public int height = 20;
+        public float spacing = 1;
         public PositionalGraph mazeNodeGraph;
         public PositionalGraph mazeWallGraph;
         public List<MazeCell> mazeCells;               
         
         void Start()
         {
-            mazeNodeGraph = new PositionalGraph(width, height);
+            mazeNodeGraph = new PositionalGraph(width, height, spacing);
                         
             mazeWallGraph = new PositionalGraph(width + 1 , height + 1);
-            mazeWallGraph.ConnectNeighbourNodes();
+            mazeWallGraph.ConnectNodesWithinDistance(spacing);
 
             List<PositionalGraphNode> mazeNodes = mazeNodeGraph.GetNodes();
             List<PositionalGraphNode> wallNodes = mazeWallGraph.GetNodes();
