@@ -5,13 +5,13 @@ namespace ProceduralMaze
 {
     public class GraphConnection<T> where T : GraphNode
     {
-        public T start;
-        public T end;
+        public T nodeA;
+        public T nodeB;
 
-        public GraphConnection(T start, T end)
+        public GraphConnection(T nodeA, T nodeB)
         {
-            this.start = start;
-            this.end = end;
+            this.nodeA = nodeA;
+            this.nodeB = nodeB;
         }
     }
 }

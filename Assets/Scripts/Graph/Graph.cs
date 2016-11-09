@@ -45,8 +45,8 @@ namespace ProceduralMaze {
         public void DisconnectNodes(GraphConnection<T> connection)
         {
             connections.Remove(FindConnection(connection));
-            connection.start.RemoveConnectedNode(connection.end);
-            connection.end.RemoveConnectedNode(connection.start);
+            connection.nodeA.RemoveConnectedNode(connection.nodeB);
+            connection.nodeB.RemoveConnectedNode(connection.nodeA);
         }
 
         public void DisconnectNodes(T nodeA, T nodeB)
@@ -59,14 +59,14 @@ namespace ProceduralMaze {
         {
             foreach (GraphConnection<T> existingConnection in connections) //TODO - this would be better served by a custom equality operator?
             {
-                if (existingConnection.start == connection.start &&
-                    existingConnection.end == connection.end)
+                if (existingConnection.nodeA == connection.nodeA &&
+                    existingConnection.nodeB == connection.nodeB)
                 {
                     return existingConnection;
                 }
 
-                if (existingConnection.start == connection.end &&
-                      existingConnection.end == connection.start)
+                if (existingConnection.nodeA == connection.nodeB &&
+                      existingConnection.nodeB == connection.nodeA)
                 {
                     return existingConnection;
                 }
