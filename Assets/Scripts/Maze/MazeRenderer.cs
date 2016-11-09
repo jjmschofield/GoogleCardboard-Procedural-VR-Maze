@@ -12,6 +12,8 @@ namespace ProceduralMaze
         public bool drawMazeConnections = false;
         public bool drawWallConnections = false;
         public bool drawMazeWallRelationships = false;
+        public bool drawMazeWalls = false;
+
         Maze maze;
 
         void Start()
@@ -78,13 +80,13 @@ namespace ProceduralMaze
 
                 foreach(MazeCell cell in maze.mazeCells)
                 {
-                    foreach(PositionalGraphNode wallNode in cell.wallGraphNodes)
+                    foreach(PositionalGraphNode wallNode in cell.wallNodes)
                     {
-                        Gizmos.DrawLine(cell.mazeGrpahNode.position, wallNode.position);
+                        Gizmos.DrawLine(cell.mazeNode.position, wallNode.position);
                     }
                 }
 
-            }
+            }            
         }
     }
 }

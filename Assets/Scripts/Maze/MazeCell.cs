@@ -2,16 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace ProceduralMaze { 
+namespace ProceduralMaze {
     public class MazeCell {
-        public PositionalGraphNode mazeGrpahNode;
-        public List<PositionalGraphNode> wallGraphNodes;
+        public PositionalGraphNode mazeNode;
+        public List<PositionalGraphNode> wallNodes;
 
-        public MazeCell(PositionalGraphNode mazeGrpahNode)
+        public MazeCell(PositionalGraphNode mazeNode)
         {
-            this.mazeGrpahNode = mazeGrpahNode;
-            wallGraphNodes = new List<PositionalGraphNode>();
-
+            this.mazeNode = mazeNode;
+            wallNodes = new List<PositionalGraphNode>();
         }
 
     }
