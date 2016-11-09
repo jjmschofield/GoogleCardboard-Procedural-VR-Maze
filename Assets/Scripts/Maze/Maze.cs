@@ -34,26 +34,28 @@ namespace ProceduralMaze
             foreach (PositionalGraphNode node in mazeNodes)
             {
                 MazeCell mazeCell = new MazeCell(node);
-                mazeCell.wallGraphNodes = mazeWallGraph.GetNodesNearPosition(node.position, spacing);
-                mazeCells.Add(mazeCell);
+                mazeCell.wallNodes = mazeWallGraph.GetNodesNearPosition(node.position, spacing);                
+                mazeCells.Add(mazeCell);                
             }
 
 
-            /*for (int y = 0; y < width; y++)
+            RemoveWallBetweenCells(mazeCells[0], mazeCells[1]);
+
+        }
+
+        void RemoveWallBetweenCells(MazeCell cellA, MazeCell cellB)
+        {
+            List<PositionalGraphNode> sharedNodes = new List<PositionalGraphNode>();
+
+            foreach (PositionalGraphNode node in cellA.wallNodes)
             {
-                for (int x = 0; x < width; x++)
+                if (cellB.wallNodes.Contains(node))
                 {
-                    MazeCell mazeCell = new MazeCell(mazeNodes[x + y]);
+                    sharedNodes.Add(node);
+                } 
+            }
 
-                    Debug.Log("Cell " + (x + (y * width)));                
-                    Debug.Log("TL " + (x + (y * width) + y));
-                    Debug.Log("BL " + (x + (y * width) + width + y + 1));
-                    Debug.Log("TR " + (x + (y * width) + y + 1));                    
-                    Debug.Log("BR " + (x + (y * width) + width + y + 2));
-
-                }
-            }*/
-
+            mazeWallGraph.DisconnectNodes(sharedNodes[0], sharedNodes[1]); //TODO - will presently only work for cells that share only two wall peices - create overload for DisconnectNodes(List<T> nodes)
 
         }
 
