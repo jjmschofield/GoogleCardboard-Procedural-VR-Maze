@@ -18,8 +18,10 @@ namespace ProceduralMaze
         void Start()
         {
             mazeNodeGraph = new PositionalGraph(width, height, spacing);
-                        
-            mazeWallGraph = new PositionalGraph(width + 1 , height + 1);
+            mazeNodeGraph.ConnectNodesWithinDistance(spacing);
+
+
+            mazeWallGraph = new PositionalGraph(width + 1 , height + 1, spacing);
             mazeWallGraph.ConnectNodesWithinDistance(spacing);
 
             List<PositionalGraphNode> mazeNodes = mazeNodeGraph.GetNodes();
