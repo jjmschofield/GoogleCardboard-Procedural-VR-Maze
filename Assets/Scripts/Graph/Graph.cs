@@ -7,7 +7,6 @@ namespace ProceduralMaze {
         protected List<T> nodes;
         protected List<GraphConnection<T>> connections;
 
-        //Create an empty Graph
         public Graph() 
         {
             nodes = new List<T>();
