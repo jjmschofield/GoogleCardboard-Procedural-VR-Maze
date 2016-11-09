@@ -13,7 +13,7 @@ namespace ProceduralMaze
             connectedNodes = new List<GraphNode>();
         }
 
-        public void AddConnecteNoded(GraphNode node)
+        public void AddConnectedNode(GraphNode node)
         {
             if (!connectedNodes.Contains(node))
             {
