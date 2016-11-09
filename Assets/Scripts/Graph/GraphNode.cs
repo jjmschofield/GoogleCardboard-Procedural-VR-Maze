@@ -5,8 +5,9 @@ using System.Collections.Generic;
 namespace ProceduralMaze
 {
     public class GraphNode
-    {        
+    {
         protected List<GraphNode> connectedNodes;
+        
 
         public GraphNode()
         {
