@@ -54,6 +54,23 @@ namespace ProceduralMaze
             return null;
         }
 
+        public List<PositionalGraphNode> GetNodesNearPosition(Vector3 position, float distance)
+        {
+            List<PositionalGraphNode> nodesNearPosition = new List<PositionalGraphNode>();
+
+            foreach(PositionalGraphNode node in nodes)
+            {
+                Vector3 vectorDistance = position - node.position;
+
+                if(vectorDistance.sqrMagnitude <= distance)
+                {
+                    nodesNearPosition.Add(node);
+                }
+            }
+
+            return nodesNearPosition;
+        }
+
         public void ConnectNodesWithinDistance(float connectionDistancee) //TODO - this is inefficient 
         {
             foreach (PositionalGraphNode node in nodes)
