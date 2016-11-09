@@ -16,7 +16,7 @@ namespace ProceduralMaze
         public PositionalGraphNode(Vector3 position)
         {
             this.position = position;
-            neighbours = new List<GraphNode>();
+            connectedNodes = new List<GraphNode>();
         }    
     }
 }

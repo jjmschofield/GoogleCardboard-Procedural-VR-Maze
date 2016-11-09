@@ -6,21 +6,21 @@ namespace ProceduralMaze
 {
     public class GraphNode
     {        
-        protected List<GraphNode> neighbours;
+        protected List<GraphNode> connectedNodes;
 
         public GraphNode()
         {
-            neighbours = new List<GraphNode>();
+            connectedNodes = new List<GraphNode>();
         }
 
-        public void AddNeighbour(GraphNode neigbour)
+        public void AddConnecteNoded(GraphNode node)
         {
-            neighbours.Add(neigbour);
+            connectedNodes.Add(node);
         }
 
-        public List<GraphNode> GetNeighbours()
+        public List<GraphNode> GetConnectedNodes()
         {
-            return neighbours;
+            return connectedNodes;
         }
 
     }

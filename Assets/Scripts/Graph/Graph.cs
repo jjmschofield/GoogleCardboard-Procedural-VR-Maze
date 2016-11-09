@@ -31,40 +31,32 @@ namespace ProceduralMaze {
             return connections;
         }
 
-        public void ConnectNeighbourNodes()
+        public void ConnectNodes(T nodeA, T nodeB)
         {
-            connections = new List<GraphConnection<T>>();
+            GraphConnection<T> connection = new GraphConnection<T>(nodeA, nodeB);
 
-            foreach (T node in nodes)
+            if (!ConnectionExists(connection))
             {
-                List<GraphNode> neighbours = node.GetNeighbours();
-
-                foreach (T neighbor in neighbours)
-                {
-                    GraphConnection<T> edge = new GraphConnection<T>(node, neighbor);
-
-                    if (!ConnectionExists(edge))
-                    {
-                        connections.Add(edge);
-                    }
-                }
+                nodeA.AddConnecteNoded(nodeA);
+                nodeA.AddConnecteNoded(nodeB);
+                connections.Add(connection);
             }
         }
 
-        bool ConnectionExists(GraphConnection<T> edge)
+        bool ConnectionExists(GraphConnection<T> connection)
         {
 
-            foreach (GraphConnection<T> existingEdge in connections)
+            foreach (GraphConnection<T> existingConnection in connections)
             {
 
-                if (existingEdge.start == edge.start &&
-                    existingEdge.end == edge.end)
+                if (existingConnection.start == connection.start &&
+                    existingConnection.end == connection.end)
                 {
                     return true;
                 }
 
-                if (existingEdge.start == edge.end &&
-                      existingEdge.end == edge.start)
+                if (existingConnection.start == connection.end &&
+                      existingConnection.end == connection.start)
                 {
                     return true;
                 }
