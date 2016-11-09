@@ -34,7 +34,7 @@ namespace ProceduralMaze {
         {
             GraphConnection<T> connection = new GraphConnection<T>(nodeA, nodeB);
 
-            if (!ConnectionExists(connection))
+            if (FindConnection(connection) == null)
             {
                 nodeA.AddConnecteNoded(nodeA);
                 nodeA.AddConnecteNoded(nodeB);
@@ -48,21 +48,33 @@ namespace ProceduralMaze {
             foreach (GraphConnection<T> existingConnection in connections)
             {
 
+        public GraphConnection<T> FindConnection(GraphConnection<T> connection)
+        {
+            foreach (GraphConnection<T> existingConnection in connections) //TODO - this would be better served by a custom equality operator?
+            {
                 if (existingConnection.start == connection.start &&
                     existingConnection.end == connection.end)
                 {
-                    return true;
+                    return existingConnection;
                 }
 
                 if (existingConnection.start == connection.end &&
                       existingConnection.end == connection.start)
                 {
-                    return true;
+                    return existingConnection;
                 }
             }
 
-            return false;
+            return null;
         }
 
-    }
+        public GraphConnection<T> FindConnection(T nodeA, T nodeB)
+        {
+            GraphConnection<T> connection = new GraphConnection<T>(nodeA, nodeB);
+            return FindConnection(connection);
+        }
+
+
+
+        }
 }
