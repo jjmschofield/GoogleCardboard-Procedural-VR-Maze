@@ -11,6 +11,7 @@ namespace ProceduralMaze
         public bool drawWallNodes = false;
         public bool drawMazeConnections = false;
         public bool drawWallConnections = false;
+        public bool drawMazeWallRelationships = false;
         Maze maze;
 
         void Start()
@@ -20,8 +21,6 @@ namespace ProceduralMaze
 
         void OnDrawGizmos()
         {
-
-            Vector3 wallOffset = new Vector3(0.5F, 0, 0.5F);
 
             if (drawMazeNodes)
             {
@@ -71,6 +70,20 @@ namespace ProceduralMaze
                 {
                     Gizmos.DrawLine(connection.nodeA.position, connection.nodeB.position);
                 }
+            }
+
+            if (drawMazeWallRelationships)
+            {
+                Gizmos.color = Color.green;
+
+                foreach(MazeCell cell in maze.mazeCells)
+                {
+                    foreach(PositionalGraphNode wallNode in cell.wallGraphNodes)
+                    {
+                        Gizmos.DrawLine(cell.mazeGrpahNode.position, wallNode.position);
+                    }
+                }
+
             }
         }
     }

@@ -29,8 +29,17 @@ namespace ProceduralMaze
             List<PositionalGraphNode> mazeNodes = mazeNodeGraph.GetNodes();
             List<PositionalGraphNode> wallNodes = mazeWallGraph.GetNodes();
 
+            mazeCells = new List<MazeCell>();
 
-            for (int y = 0; y < width; y++)
+            foreach (PositionalGraphNode node in mazeNodes)
+            {
+                MazeCell mazeCell = new MazeCell(node);
+                mazeCell.wallGraphNodes = mazeWallGraph.GetNodesNearPosition(node.position, spacing);
+                mazeCells.Add(mazeCell);
+            }
+
+
+            /*for (int y = 0; y < width; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
@@ -43,7 +52,7 @@ namespace ProceduralMaze
                     Debug.Log("BR " + (x + (y * width) + width + y + 2));
 
                 }
-            }
+            }*/
 
 
         }
