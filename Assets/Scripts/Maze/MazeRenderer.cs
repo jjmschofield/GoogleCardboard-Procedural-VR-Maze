@@ -25,7 +25,7 @@ namespace ProceduralMaze
 
             if (drawMazeNodes)
             {
-                Gizmos.color = Color.grey;
+                Gizmos.color = Color.cyan;
 
                 var nodes = maze.mazeNodeGraph.GetNodes();
 
@@ -37,6 +37,8 @@ namespace ProceduralMaze
 
             if (drawMazeConnections)
             {
+                Gizmos.color = Color.cyan;
+
                 List<GraphConnection<PositionalGraphNode>> connections = maze.mazeNodeGraph.GetConnections();
 
                 foreach (GraphConnection<PositionalGraphNode> connection in connections)
