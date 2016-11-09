@@ -57,7 +57,7 @@ namespace ProceduralMaze
 
                 foreach (PositionalGraphNode node in nodes)
                 {
-                    Gizmos.DrawSphere(node.position - wallOffset, 0.1f);
+                    Gizmos.DrawSphere(node.position, 0.1f);
                 }
             }
 
@@ -69,7 +69,7 @@ namespace ProceduralMaze
 
                 foreach (GraphConnection<PositionalGraphNode> connection in connections)
                 {
-                    Gizmos.DrawLine(connection.nodeA.position - wallOffset, connection.nodeB.position - wallOffset);
+                    Gizmos.DrawLine(connection.nodeA.position, connection.nodeB.position);
                 }
             }
         }

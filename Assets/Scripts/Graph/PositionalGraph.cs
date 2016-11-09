@@ -12,13 +12,13 @@ namespace ProceduralMaze
           
         } 
         
-        public PositionalGraph(int width, int height, float spacing = 1)
+        public PositionalGraph(int width, int height, float spacing = 1, Vector3 offset = new Vector3())
         {           
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < width; y++)
                 {
-                    AddNode(new Vector3(x * spacing, 0 , y * spacing));
+                    AddNode(new Vector3(x * spacing, 0 , y * spacing) - offset);
                 }
             }
         } 

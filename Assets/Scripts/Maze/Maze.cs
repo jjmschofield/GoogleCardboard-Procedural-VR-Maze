@@ -15,13 +15,15 @@ namespace ProceduralMaze
         public PositionalGraph mazeWallGraph;
         public List<MazeCell> mazeCells;               
         
+
+
         void Start()
         {
             mazeNodeGraph = new PositionalGraph(width, height, spacing);
             mazeNodeGraph.ConnectNodesWithinDistance(spacing);
 
-
-            mazeWallGraph = new PositionalGraph(width + 1 , height + 1, spacing);
+            Vector3 wallOffset = new Vector3(spacing / 2, 0, spacing / 2);
+            mazeWallGraph = new PositionalGraph(width + 1 , height + 1, spacing, wallOffset);
             mazeWallGraph.ConnectNodesWithinDistance(spacing);
 
             List<PositionalGraphNode> mazeNodes = mazeNodeGraph.GetNodes();
@@ -34,11 +36,10 @@ namespace ProceduralMaze
                 {
                     MazeCell mazeCell = new MazeCell(mazeNodes[x + y]);
 
-                    Debug.Log("Cell " + (x + (y * width)));
-
+                    Debug.Log("Cell " + (x + (y * width)));                
                     Debug.Log("TL " + (x + (y * width) + y));
-                    Debug.Log("TR " + (x + (y * width) + y + 1));
                     Debug.Log("BL " + (x + (y * width) + width + y + 1));
+                    Debug.Log("TR " + (x + (y * width) + y + 1));                    
                     Debug.Log("BR " + (x + (y * width) + width + y + 2));
 
                 }
