@@ -42,11 +42,18 @@ namespace ProceduralMaze {
             }
         }
 
-        bool ConnectionExists(GraphConnection<T> connection)
+        public void DisconnectNodes(GraphConnection<T> connection)
         {
+            connections.Remove(FindConnection(connection));
+            connection.start.RemoveConnectedNode(connection.end);
+            connection.end.RemoveConnectedNode(connection.start);
+        }
 
-            foreach (GraphConnection<T> existingConnection in connections)
-            {
+        public void DisconnectNodes(T nodeA, T nodeB)
+        {
+            GraphConnection<T> connection = new GraphConnection<T>(nodeA, nodeB);
+            DisconnectNodes(connection);
+        }
 
         public GraphConnection<T> FindConnection(GraphConnection<T> connection)
         {

@@ -21,6 +21,10 @@ namespace ProceduralMaze
             }
         }
 
+        public void RemoveConnectedNode(GraphNode node)
+        {
+            connectedNodes.Remove(node);
+        }
         public List<GraphNode> GetConnectedNodes()
         {
             return connectedNodes;
