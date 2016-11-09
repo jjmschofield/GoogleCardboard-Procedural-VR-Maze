@@ -22,14 +22,7 @@ namespace ProceduralMaze
                     AddNode(new Vector3(x * spacing, 0 , y * spacing));
                 }
             }
-
-            Update();
-        }
-
-        public void Update()
-        {
-            SetNodeNeighbours();            
-        }        
+        } 
 
         public PositionalGraphNode AddNode(Vector3 position)
         {
