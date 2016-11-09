@@ -14,7 +14,6 @@ namespace ProceduralMaze
         
         public PositionalGraph(int width, int height, float spacing = 1)
         {           
-
             for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < width; y++)
