@@ -28,7 +28,7 @@ namespace ProceduralMaze
             {
                 Gizmos.color = Color.cyan;
 
-                var nodes = maze.mazeNodeGraph.GetNodes();
+                var nodes = maze.pathGraph.GetNodes();
 
                 foreach (PositionalGraphNode node in nodes)
                 {                   
@@ -40,7 +40,7 @@ namespace ProceduralMaze
             {
                 Gizmos.color = Color.cyan;
 
-                List<GraphConnection<PositionalGraphNode>> connections = maze.mazeNodeGraph.GetConnections();
+                List<GraphConnection<PositionalGraphNode>> connections = maze.pathGraph.GetConnections();
 
                 foreach (GraphConnection<PositionalGraphNode> connection in connections)
                 {                   
@@ -53,7 +53,7 @@ namespace ProceduralMaze
 
                 Gizmos.color = Color.red;
 
-                var nodes = maze.mazeWallGraph.GetNodes();
+                var nodes = maze.wallGraph.GetNodes();
 
 
                 foreach (PositionalGraphNode node in nodes)
@@ -66,7 +66,7 @@ namespace ProceduralMaze
             {
                 Gizmos.color = Color.red;
 
-                List<GraphConnection<PositionalGraphNode>> connections = maze.mazeWallGraph.GetConnections();
+                List<GraphConnection<PositionalGraphNode>> connections = maze.wallGraph.GetConnections();
 
                 foreach (GraphConnection<PositionalGraphNode> connection in connections)
                 {
@@ -78,7 +78,7 @@ namespace ProceduralMaze
             {
                 Gizmos.color = Color.green;
 
-                foreach(MazeCell cell in maze.mazeCells)
+                foreach(MazeCell cell in maze.cells)
                 {
                     foreach(PositionalGraphNode wallNode in cell.wallNodes)
                     {
