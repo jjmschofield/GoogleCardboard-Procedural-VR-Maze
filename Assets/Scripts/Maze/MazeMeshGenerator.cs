@@ -11,7 +11,7 @@ namespace ProceduralMaze
         PositionalGraph floorGraph;
         PositionalGraph wallGraph;
         MeshFilter meshFilter;
-
+        
         enum DIRECTION { horizontal, vertical };
 
         void Start()
@@ -19,97 +19,54 @@ namespace ProceduralMaze
             meshFilter = gameObject.GetComponent<MeshFilter>();
         }
 
-
-
         public void UpdateMesh(List<MazeCell> cells, PositionalGraph floorGraph, PositionalGraph wallGraph)
         {       
             this.cells = cells;
             this.floorGraph = floorGraph;
             this.wallGraph = wallGraph;
-
-            //Generate walls
-            UpdateWalls();
+                    
+            Mesh wallMesh = GenerateWallMesh();
             //Generate floor
-
             //Generate ceiling
 
-        }
-        
+            meshFilter.mesh = wallMesh;
+        }        
 
-        public void UpdateWalls()
+         Mesh GenerateWallMesh()
         {
-            List<Quad> faces = GetWallFaces();
-            meshFilter.mesh = new StitchedQuadMesh(faces).mesh;
+            List<Cube> cubes = GetWallCubes();
+            return new StitchedCubeMesh(cubes).mesh;
         }
 
-        List<Quad> GetWallFaces()
+        List<Cube> GetWallCubes()
         {
+            List<Cube> cubes = new List<Cube>();
+
             float wallHeight = 2.0F;
-
-            List<Quad> faces = new List<Quad>();
-
+            float wallWidth = 0.5F;
             foreach (GraphConnection<PositionalGraphNode> connection in wallGraph.GetConnections())
             {
-                //Determine if horizontal
                 DIRECTION wallDirection = GetWallDirection(connection);
 
-                //Get verts
-                Vector3 bottomLeft = new Vector3(); //Bottom left               
-                Vector3 bottomRight = new Vector3(); //Bottom Left
-
-                Vector3 normal = new Vector3();
+                Vector3 position = (connection.nodeA.position + connection.nodeB.position) / 2;
+                position.y += wallHeight / 2;
+                Vector3 vectorDistance = connection.nodeA.position - connection.nodeB.position;
+                float distance = vectorDistance.magnitude;
 
                 if (wallDirection == DIRECTION.horizontal)
                 {
-
-                    normal = Vector3.forward;
-
-                    if (connection.nodeA.position.x < connection.nodeB.position.x)
-                    {
-                        bottomLeft = connection.nodeA.position;
-                        bottomRight = connection.nodeB.position;
-                    }
-
-                    if (connection.nodeA.position.x > connection.nodeB.position.x)
-                    {
-                        bottomLeft = connection.nodeB.position;
-                        bottomRight = connection.nodeA.position;
-                    }
+                    Cube cube = new Cube(position, distance, wallWidth, wallHeight);
+                    cubes.Add(cube);
                 }
-
-                if (wallDirection == DIRECTION.vertical)
+                else
                 {
-
-                    normal = Vector3.right;
-
-                    if (connection.nodeA.position.z < connection.nodeB.position.z)
-                    {
-                        bottomLeft = connection.nodeA.position;
-                        bottomRight = connection.nodeB.position;
-                    }
-
-                    if (connection.nodeA.position.z > connection.nodeB.position.z)
-                    {
-                        bottomLeft = connection.nodeB.position;
-                        bottomRight = connection.nodeA.position;
-                    }
-                }
-
-                Vector3 topLeft = new Vector3(bottomLeft.x, wallHeight, bottomLeft.z);
-                Vector3 topRight = new Vector3(bottomRight.x, wallHeight, bottomRight.z);
-
-//                Vector3 offset = new Vector3(0, 0, 0.4F);
-
-                Quad frontFace = new Quad(bottomLeft, topLeft, topRight, bottomRight, WINDING.clockwise, normal);
-                Quad backFace = new Quad(bottomRight, topRight, topLeft, bottomLeft, WINDING.clockwise, -normal);
-
-                faces.Add(frontFace);
-                //faces.Add(backFace);
-
+                    Cube cube = new Cube(position, wallWidth, distance, wallHeight);
+                    cubes.Add(cube);
+                }   
             }
 
-            return faces;
-        }
+            return cubes;
+        }        
 
         DIRECTION GetWallDirection(GraphConnection<PositionalGraphNode> connection)
         {
