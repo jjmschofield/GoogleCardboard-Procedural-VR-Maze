@@ -11,29 +11,29 @@ namespace ProceduralMaze
         public Vector2[] uv;
 
 
-        public Quad(Vector3 bottomLeft, Vector3 topLeft, Vector3 topRight, Vector3 bottomRight, WINDING winding, Vector3 normal)
+        public Quad(Vector3 position, float width, float height, WINDING winding, Vector3 normal)
         {
-            verts = new Vector3[4];
-            tris = new int[6];
-            normals = new Vector3[4];
-            uv = new Vector2[4];
-
-            SetVerts(bottomLeft, topLeft, topRight, bottomRight);
+            SetVerts(position,width,height);
             SetTris(winding);
             SetNormals(normal);
             SetUVs();
         }
 
-        void SetVerts(Vector3 bottomLeft, Vector3 topLeft, Vector3 topRight, Vector3 bottomRight)
+        void SetVerts(Vector3 position, float width, float height)
         {
-            verts[0] = bottomLeft;
-            verts[1] = topLeft;
-            verts[2] = topRight;
-            verts[3] = bottomRight;
+            verts = new Vector3[]
+            {
+                new  Vector3(-width * .5f, 0, -height * .5f) + position,
+                new  Vector3(-width * .5f, 0, height * .5f) + position,
+                new  Vector3(width * .5f, 0, height * .5f) + position,
+                new  Vector3(width * .5f, 0, -height * .5f) + position
+            }; 
         }
 
         void SetTris(WINDING winding)
         {
+            tris = new int[6];
+
             switch (winding)
             {
                 case WINDING.clockwise:
@@ -64,20 +64,18 @@ namespace ProceduralMaze
 
         void SetNormals(Vector3 normal)
         {
- //           Vector3 normal = Vector3.Cross(verts[1] - verts[0], verts[3] - verts[0]).normalized;
-
-            normals[0] = normal;
-            normals[1] = normal;
-            normals[2] = normal;
-            normals[3] = normal;
+            normals = new Vector3[] { normal, normal, normal, normal };
         }
 
         void SetUVs()
         {
-            uv[0] = new Vector2(0, 0);
-            uv[1] = new Vector2(0, 1);
-            uv[2] = new Vector2(1, 1);
-            uv[3] = new Vector2(1, 0);
+            uv = new Vector2[]
+            {
+                new Vector2(0, 0),
+                new Vector2(0, 1),
+                new Vector2(1, 1),
+                new Vector2(1, 0)
+            };
         }
     }
 }
