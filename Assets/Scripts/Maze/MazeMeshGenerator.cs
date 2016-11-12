@@ -54,47 +54,57 @@ namespace ProceduralMaze
                 DIRECTION wallDirection = GetWallDirection(connection);
 
                 //Get verts
-                Vector3 blVert = new Vector3(); //Bottom left               
-                Vector3 brVert = new Vector3(); //Bottom Left
+                Vector3 bottomLeft = new Vector3(); //Bottom left               
+                Vector3 bottomRight = new Vector3(); //Bottom Left
+
+                Vector3 normal = new Vector3();
 
                 if (wallDirection == DIRECTION.horizontal)
                 {
+
+                    normal = Vector3.forward;
+
                     if (connection.nodeA.position.x < connection.nodeB.position.x)
                     {
-                        blVert = connection.nodeA.position;
-                        brVert = connection.nodeB.position;
+                        bottomLeft = connection.nodeA.position;
+                        bottomRight = connection.nodeB.position;
                     }
 
                     if (connection.nodeA.position.x > connection.nodeB.position.x)
                     {
-                        blVert = connection.nodeB.position;
-                        brVert = connection.nodeA.position;
+                        bottomLeft = connection.nodeB.position;
+                        bottomRight = connection.nodeA.position;
                     }
                 }
 
                 if (wallDirection == DIRECTION.vertical)
                 {
+
+                    normal = Vector3.right;
+
                     if (connection.nodeA.position.z < connection.nodeB.position.z)
                     {
-                        blVert = connection.nodeA.position;
-                        brVert = connection.nodeB.position;
+                        bottomLeft = connection.nodeA.position;
+                        bottomRight = connection.nodeB.position;
                     }
 
                     if (connection.nodeA.position.z > connection.nodeB.position.z)
                     {
-                        blVert = connection.nodeB.position;
-                        brVert = connection.nodeA.position;
+                        bottomLeft = connection.nodeB.position;
+                        bottomRight = connection.nodeA.position;
                     }
                 }
 
-                Vector3 tlVert = new Vector3(blVert.x, wallHeight, blVert.z);
-                Vector3 trVert = new Vector3(brVert.x, wallHeight, brVert.z);
+                Vector3 topLeft = new Vector3(bottomLeft.x, wallHeight, bottomLeft.z);
+                Vector3 topRight = new Vector3(bottomRight.x, wallHeight, bottomRight.z);
 
-                Quad frontFace = new Quad(blVert, tlVert, trVert, brVert, WINDING.clockwise);
-                Quad backFace = new Quad(brVert, trVert, tlVert, blVert, WINDING.clockwise);
+//                Vector3 offset = new Vector3(0, 0, 0.4F);
+
+                Quad frontFace = new Quad(bottomLeft, topLeft, topRight, bottomRight, WINDING.clockwise, normal);
+                Quad backFace = new Quad(bottomRight, topRight, topLeft, bottomLeft, WINDING.clockwise, -normal);
 
                 faces.Add(frontFace);
-                faces.Add(backFace);
+                //faces.Add(backFace);
 
             }
 

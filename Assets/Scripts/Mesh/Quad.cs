@@ -11,7 +11,7 @@ namespace ProceduralMaze
         public Vector2[] uv;
 
 
-        public Quad(Vector3 bottomLeft, Vector3 topLeft, Vector3 topRight, Vector3 bottomRight, WINDING winding = WINDING.clockwise)
+        public Quad(Vector3 bottomLeft, Vector3 topLeft, Vector3 topRight, Vector3 bottomRight, WINDING winding, Vector3 normal)
         {
             verts = new Vector3[4];
             tris = new int[6];
@@ -20,7 +20,7 @@ namespace ProceduralMaze
 
             SetVerts(bottomLeft, topLeft, topRight, bottomRight);
             SetTris(winding);
-            SetNormals();
+            SetNormals(normal);
             SetUVs();
         }
 
@@ -62,9 +62,9 @@ namespace ProceduralMaze
             }
         }
 
-        void SetNormals()
+        void SetNormals(Vector3 normal)
         {
-            Vector3 normal = Vector3.Cross(verts[1] - verts[0], verts[3] - verts[0]).normalized;
+ //           Vector3 normal = Vector3.Cross(verts[1] - verts[0], verts[3] - verts[0]).normalized;
 
             normals[0] = normal;
             normals[1] = normal;
