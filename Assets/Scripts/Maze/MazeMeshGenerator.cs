@@ -26,10 +26,12 @@ namespace ProceduralMaze
             this.wallGraph = wallGraph;
                     
             Mesh wallMesh = GenerateWallMesh();
+            Mesh floorMesh = GenerateFloorMesh();
+
             //Generate floor
             //Generate ceiling
 
-            meshFilter.mesh = wallMesh;
+            meshFilter.mesh = floorMesh;
         }        
 
          Mesh GenerateWallMesh()
@@ -67,6 +69,26 @@ namespace ProceduralMaze
 
             return cubes;
         }        
+
+        Mesh GenerateFloorMesh()
+        {
+            List<Quad> quads = GeneratePlane();
+            return new StitchedQuadMesh(quads).mesh;
+        }
+
+
+        List<Quad> GeneratePlane()
+        {
+            List<Quad> quads = new List<Quad>();
+
+            foreach(PositionalGraphNode node in floorGraph.GetNodes())
+            {
+                Quad quad = new Quad(node.position, 2, 2, WINDING.clockwise, Vector3.up);
+                quads.Add(quad);
+            }
+
+            return quads;
+        }
 
         DIRECTION GetWallDirection(GraphConnection<PositionalGraphNode> connection)
         {
