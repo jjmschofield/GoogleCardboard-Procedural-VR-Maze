@@ -62,7 +62,9 @@ namespace ProceduralMaze
             {
                 Vector3 vectorDistance = position - node.position;
 
-                if(vectorDistance.sqrMagnitude <= distance)
+                //Debug.Log(vectorDistance.sqrMagnitude);
+
+                if(vectorDistance.magnitude <= distance)
                 {
                     nodesNearPosition.Add(node);
                 }
@@ -79,7 +81,7 @@ namespace ProceduralMaze
                 {
                     Vector3 vectorDistance = node.position - comparisonNode.position;
 
-                    if (vectorDistance.sqrMagnitude <= connectionDistancee)
+                    if (vectorDistance.magnitude <= connectionDistancee)
                     {
                         ConnectNodes(node, comparisonNode);
                     }
