@@ -11,7 +11,8 @@ namespace ProceduralMaze
         PositionalGraph floorGraph;
         PositionalGraph wallGraph;
         MeshFilter meshFilter;
-        Mesh mesh;
+
+        enum DIRECTION { horizontal, vertical };
 
         void Start()
         {
@@ -21,9 +22,7 @@ namespace ProceduralMaze
 
 
         public void UpdateMesh(List<MazeCell> cells, PositionalGraph floorGraph, PositionalGraph wallGraph)
-        {
-        
-
+        {       
             this.cells = cells;
             this.floorGraph = floorGraph;
             this.wallGraph = wallGraph;
@@ -34,33 +33,33 @@ namespace ProceduralMaze
 
             //Generate ceiling
 
-            
-
         }
+        
 
         public void UpdateWalls()
         {
+            List<Quad> faces = GetWallFaces();
+            meshFilter.mesh = new StitchedQuadMesh(faces).mesh;
+        }
 
-            mesh = new Mesh();
-            meshFilter.mesh = mesh;
+        List<Quad> GetWallFaces()
+        {
             float wallHeight = 2.0F;
 
-            List<Vector3> verts = new List<Vector3>();
-            List<int> tris = new List<int>();
-            List<Vector3> normals = new List<Vector3>();
-            List<Vector2> uv = new List<Vector2>();
-
+            List<Quad> faces = new List<Quad>();
 
             foreach (GraphConnection<PositionalGraphNode> connection in wallGraph.GetConnections())
             {
+                //Determine if horizontal
+                DIRECTION wallDirection = GetWallDirection(connection);
 
                 //Get verts
                 Vector3 blVert = new Vector3(); //Bottom left               
                 Vector3 brVert = new Vector3(); //Bottom Left
 
-                if (connection.nodeA.position.z == connection.nodeB.position.z)
+                if (wallDirection == DIRECTION.horizontal)
                 {
-                    if(connection.nodeA.position.x < connection.nodeB.position.x)
+                    if (connection.nodeA.position.x < connection.nodeB.position.x)
                     {
                         blVert = connection.nodeA.position;
                         brVert = connection.nodeB.position;
@@ -73,7 +72,7 @@ namespace ProceduralMaze
                     }
                 }
 
-                if (connection.nodeA.position.x == connection.nodeB.position.x)
+                if (wallDirection == DIRECTION.vertical)
                 {
                     if (connection.nodeA.position.z < connection.nodeB.position.z)
                     {
@@ -88,60 +87,31 @@ namespace ProceduralMaze
                     }
                 }
 
-                Vector3 tlVert = new Vector3(blVert.x, wallHeight, blVert.z);                
+                Vector3 tlVert = new Vector3(blVert.x, wallHeight, blVert.z);
                 Vector3 trVert = new Vector3(brVert.x, wallHeight, brVert.z);
 
-                //Add verts front face - order IS important
-                verts.Add(blVert);
-                verts.Add(tlVert);
-                verts.Add(trVert);
-                verts.Add(brVert);
+                Quad frontFace = new Quad(blVert, tlVert, trVert, brVert, WINDING.clockwise);
+                Quad backFace = new Quad(brVert, trVert, tlVert, blVert, WINDING.clockwise);
 
-                //Create tris
-
-                //Bottom left tri - order IS important
-                tris.Add(verts.IndexOf(blVert));
-                tris.Add(verts.IndexOf(tlVert));
-                tris.Add(verts.IndexOf(brVert));
-
-                tris.Add(verts.IndexOf(blVert));
-                tris.Add(verts.IndexOf(brVert));
-                tris.Add(verts.IndexOf(tlVert));
-
-                //Top right tri - order IS important
-                tris.Add(verts.IndexOf(tlVert));
-                tris.Add(verts.IndexOf(trVert));
-                tris.Add(verts.IndexOf(brVert));
-
-                tris.Add(verts.IndexOf(tlVert));
-                tris.Add(verts.IndexOf(brVert));
-                tris.Add(verts.IndexOf(trVert));
-
-
-
-                //Set normals
-                normals.Add(-Vector3.forward);
-                normals.Add(-Vector3.forward);
-                normals.Add(-Vector3.forward);
-                normals.Add(-Vector3.forward);
-
-
-                //Set uvs                
-                uv.Add(new Vector2(verts.IndexOf(blVert), verts.IndexOf(tlVert)));
-                uv.Add(new Vector2(verts.IndexOf(tlVert), verts.IndexOf(trVert)));
-                uv.Add(new Vector2(verts.IndexOf(trVert), verts.IndexOf(brVert)));
-                uv.Add(new Vector2(verts.IndexOf(brVert), verts.IndexOf(blVert)));
-                
+                faces.Add(frontFace);
+                faces.Add(backFace);
 
             }
 
-            mesh.vertices = verts.ToArray();
-            mesh.triangles = tris.ToArray();
-            mesh.uv = uv.ToArray();
+            return faces;
         }
 
-
-        
+        DIRECTION GetWallDirection(GraphConnection<PositionalGraphNode> connection)
+        {
+            if (connection.nodeA.position.z == connection.nodeB.position.z)
+            {
+                return DIRECTION.horizontal;
+            }
+            else
+            {
+                return DIRECTION.vertical;
+            }
+        }
     }
 }
 
