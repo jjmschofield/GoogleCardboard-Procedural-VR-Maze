@@ -16,7 +16,7 @@ namespace ProceduralMaze
 
         public void AddConnectedNode(GraphNode node)
         {
-            if (!connectedNodes.Contains(node))
+            if (node != this && !connectedNodes.Contains(node))
             {
                 connectedNodes.Add(node);
             }

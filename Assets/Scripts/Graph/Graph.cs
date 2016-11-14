@@ -34,7 +34,7 @@ namespace ProceduralMaze {
         {
             GraphConnection<T> connection = new GraphConnection<T>(nodeA, nodeB);
 
-            if (FindConnection(connection) == null)
+            if (nodeA != nodeB && FindConnection(connection) == null)
             {
                 nodeA.AddConnectedNode(nodeA);
                 nodeA.AddConnectedNode(nodeB);
