@@ -6,6 +6,7 @@ using System.Collections.Generic;
 namespace ProceduralMaze
 {
     [RequireComponent(typeof(MazeRenderer))]
+    [RequireComponent(typeof(MazeMeshGenerator))]
     public class Maze : MonoBehaviour
     {
         public int width = 20;
@@ -15,9 +16,13 @@ namespace ProceduralMaze
         public PositionalGraph wallGraph;
         public List<MazeCell> cells;
 
+        MazeMeshGenerator meshGenerator;
+
         void Start()
         {
             CreateMaze();
+            meshGenerator = gameObject.GetComponent<MazeMeshGenerator>();
+            meshGenerator.UpdateMesh(cells, pathGraph, wallGraph);
         }
 
         void CreateMaze()
@@ -27,6 +32,11 @@ namespace ProceduralMaze
             cells = mazeGenerator.cells;
             pathGraph = mazeGenerator.pathGraph;
             wallGraph = mazeGenerator.wallGraph;
+        }
+
+        void Awake()
+        {
+            
         }
 
 
