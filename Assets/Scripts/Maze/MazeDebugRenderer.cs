@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 namespace ProceduralMaze
 {
-    [RequireComponent(typeof(MazeRenderer))]
-    public class MazeRenderer : MonoBehaviour
+    [RequireComponent(typeof(Maze))]
+    public class MazeDebugRenderer : MonoBehaviour
     {
         public bool drawMazeNodes = false;
         public bool drawWallNodes = false;
@@ -13,6 +13,7 @@ namespace ProceduralMaze
         public bool drawWallConnections = false;
         public bool drawMazeWallRelationships = false;
         public bool drawMazeWalls = false;
+        public bool drawPlayerNavigationNodes = false;
 
         Maze maze;
 
@@ -86,7 +87,18 @@ namespace ProceduralMaze
                     }
                 }
 
-            }            
+            }
+
+            if (drawPlayerNavigationNodes)
+            {
+
+                Gizmos.color = Color.green;                
+
+                foreach (PositionalGraphNode node in maze.playerNavGraph.graph.GetNodes())
+                {
+                    Gizmos.DrawSphere(node.position, 0.1f);
+                }
+            }
         }
     }
 }
