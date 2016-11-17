@@ -36,8 +36,8 @@ namespace ProceduralMaze {
 
             if (nodeA != nodeB && FindConnection(connection) == null)
             {
-                nodeA.AddConnectedNode(nodeA);
                 nodeA.AddConnectedNode(nodeB);
+                nodeB.AddConnectedNode(nodeA);                
                 connections.Add(connection);
             }
         }
