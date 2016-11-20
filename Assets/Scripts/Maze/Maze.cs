@@ -7,6 +7,7 @@ namespace ProceduralMaze
 {
     [RequireComponent(typeof(MazeDebugRenderer))]
     [RequireComponent(typeof(MazeMeshGenerator))]
+    [RequireComponent(typeof(PlayerNavigation))]
     public class Maze : MonoBehaviour
     {
         public int width = 20;
@@ -39,6 +40,8 @@ namespace ProceduralMaze
         void CreatePlayerNavigation()
         {
             playerNavGraph = new PlayerNavigationGraph(pathGraph);
+            PlayerNavigation playerNavigation = gameObject.GetComponent<PlayerNavigation>();
+            playerNavigation.UpdateWaypoints(playerNavGraph.graph);
         }
 
 
