@@ -9,38 +9,81 @@ namespace ProceduralMaze
 
         public PositionalGraph graph;
 
-        public PlayerNavigationGraph(PositionalGraph positionalGraph)
+        public PlayerNavigationGraph(PositionalGraph mazeFloorGraph)
         {
             graph = new PositionalGraph();
+            CreateNodes(mazeFloorGraph);
+            ConnectNodes(mazeFloorGraph);
+        }
 
+        void ConnectNodes(PositionalGraph mazeFloorGraph)
+        {
+            
+            foreach (PositionalGraphNode node in graph.GetNodes())
+            {
+                PositionalGraphNode floorNode = mazeFloorGraph.GetNodeAtPostion(node.position);
+
+                foreach (PositionalGraphNode neighbour in floorNode.GetConnectedNodes())
+                {
+                    bool connectedToWaypoint = false;
+                    List<PositionalGraphNode> visitedNodes = new List<PositionalGraphNode>();
+                    visitedNodes.Add(node);
+
+                    PositionalGraphNode nextStep = neighbour;
+
+                    while (!connectedToWaypoint)
+                    {
+                        visitedNodes.Add(nextStep);
+
+                        PositionalGraphNode existingNavNode = graph.GetNodeAtPostion(nextStep.position);
+
+                        if (existingNavNode != null)
+                        {
+                            graph.ConnectNodes(node, existingNavNode);
+                            connectedToWaypoint = true;
+                        }
+
+                        nextStep = nextStep.GetConnectedNodes()[0] as PositionalGraphNode;
+
+                        if (visitedNodes.Contains(nextStep)){
+                            nextStep = nextStep.GetConnectedNodes()[1] as PositionalGraphNode;
+                        } 
+
+                    }                    
+                }
+
+            }
+        }
+
+        void CreateNodes(PositionalGraph mazeFloorGraph)
+        {
             List<PositionalGraphNode> unvisitedNodes = new List<PositionalGraphNode>();
             Stack openNodes = new Stack();
-            //Stack visitedNodes = new Stack();
 
-            foreach (PositionalGraphNode node in positionalGraph.GetNodes())
+            foreach (PositionalGraphNode node in mazeFloorGraph.GetNodes())
             {
                 unvisitedNodes.Add(node);
             }
 
-            PositionalGraphNode currentNode = unvisitedNodes[0];            
+            PositionalGraphNode currentNode = unvisitedNodes[0];
             openNodes.Push(currentNode);
             unvisitedNodes.Remove(currentNode);
 
             while (openNodes.Count > 0)
-            {                
+            {
                 foreach (PositionalGraphNode node in currentNode.GetConnectedNodes())
                 {
                     if (unvisitedNodes.Contains(node))
                     {
                         openNodes.Push(node);
                         unvisitedNodes.Remove(node);
-                    }                                  
+                    }
                 }
 
                 if (ShouldBeWaypoint(currentNode))
                 {
                     graph.AddNode(currentNode.position);
-                }                
+                }
                 currentNode = openNodes.Pop() as PositionalGraphNode;
             }
         }

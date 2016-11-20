@@ -14,6 +14,7 @@ namespace ProceduralMaze
         public bool drawMazeWallRelationships = false;
         public bool drawMazeWalls = false;
         public bool drawPlayerNavigationNodes = false;
+        public bool drawPlayerNavigationConnections = false;
 
         Maze maze;
 
@@ -97,6 +98,18 @@ namespace ProceduralMaze
                 foreach (PositionalGraphNode node in maze.playerNavGraph.graph.GetNodes())
                 {
                     Gizmos.DrawSphere(node.position, 0.1f);
+                }
+            }
+
+            if (drawPlayerNavigationConnections)
+            {
+                Gizmos.color = Color.green;
+
+                List<GraphConnection<PositionalGraphNode>> connections = maze.playerNavGraph.graph.GetConnections();
+
+                foreach (GraphConnection<PositionalGraphNode> connection in connections)
+                {
+                    Gizmos.DrawLine(connection.nodeA.position, connection.nodeB.position);
                 }
             }
         }
