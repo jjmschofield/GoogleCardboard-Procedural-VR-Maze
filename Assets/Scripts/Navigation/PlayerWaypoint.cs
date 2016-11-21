@@ -1,64 +1,82 @@
 ﻿using UnityEngine;
 using System.Collections;
-
-[RequireComponent(typeof(Collider))]
-public class PlayerWaypoint : MonoBehaviour {
-
-    public Material defaultMaterial;
-    public Material highlightedMaterial;
-    public Material visitedMaterial;
-
-    bool isOccupied = false;
-    bool hasBeenVisitied = false;
-    bool isHighlighted = false;
-
-    MeshRenderer meshRenderer;
-
-    void Start()
+namespace ProceduralMaze
+{
+    [RequireComponent(typeof(Collider))]
+    public class PlayerWaypoint : MonoBehaviour
     {
-        meshRenderer = gameObject.GetComponent<MeshRenderer>();
-    }
 
-    void Update()
-    {
-        if (!hasBeenVisitied)
+        public Material defaultMaterial;
+        public Material highlightedMaterial;
+        public Material visitedMaterial;
+
+        bool isOccupied = false;
+        bool hasBeenVisitied = false;
+        bool isHighlighted = false;
+        PositionalGraphNode navNode;
+
+        MeshRenderer meshRenderer;
+
+        void Start()
         {
-            meshRenderer.material = defaultMaterial;
+            meshRenderer = gameObject.GetComponent<MeshRenderer>();
         }
 
-        if (hasBeenVisitied)
+        void Update()
         {
-            meshRenderer.material = visitedMaterial;
+            if (!hasBeenVisitied)
+            {
+                meshRenderer.material = defaultMaterial;
+            }
+
+            if (hasBeenVisitied)
+            {
+                meshRenderer.material = visitedMaterial;
+            }
+
+
+            if (isHighlighted)
+            {
+                meshRenderer.material = highlightedMaterial;
+            }
+
+            isHighlighted = false;
+        }        
+
+        public bool IsOccupied()
+        {
+            return isOccupied;
         }
 
-
-        if (isHighlighted)
+        public PositionalGraphNode GetNavNode()
         {
-            meshRenderer.material = highlightedMaterial;
+            return navNode;
         }
 
-        isHighlighted = false;
-    }   
+        public bool HasBeenVisitied()
+        {
+            return hasBeenVisitied;
+        }       
 
-    
-    public bool CanBeMovedToo()
-    {
-        return !isOccupied;
-    }
+        public void Highlight()
+        {
+            isHighlighted = true;
+        }
 
-    public bool HasBeenVisitied()
-    {
-        return hasBeenVisitied;
-    }
+        public void SetNavNode(PositionalGraphNode node)
+        {
+            navNode = node;
+        }
 
-    public void MoveTo()
-    {
-        isOccupied = true;
-        hasBeenVisitied = true;
-    }
+        public void MoveTo()
+        {
+            isOccupied = true;
+            hasBeenVisitied = true;
+        }
 
-    public void Highlight()
-    {        
-        isHighlighted = true;
+        public void MoveFrom()
+        {
+            isOccupied = false;
+        }
     }
 }

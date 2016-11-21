@@ -13,7 +13,8 @@ namespace ProceduralMaze
         void Start()
         {
             waypoints = new List<GameObject>();
-            waypointContainer = new GameObject();
+            waypointContainer = new GameObject("waypoints");
+            waypointContainer.transform.parent = transform;
         }
 
         public void UpdateWaypoints(PositionalGraph navGraph)
@@ -23,10 +24,21 @@ namespace ProceduralMaze
 
             foreach(PositionalGraphNode node in navGraph.GetNodes())
             {
-                GameObject waypoint = Instantiate(waypointPrefab, node.position, transform.rotation) as GameObject;
-                waypoint.transform.parent = waypointContainer.transform;
-                waypoints.Add(waypoint);
+                CreateWaypoint(node);
             }
+        }
+
+        public List<GameObject> GetWaypoints()
+        {
+            return waypoints;
+        }
+
+        void CreateWaypoint(PositionalGraphNode node)
+        {
+            GameObject waypoint = Instantiate(waypointPrefab, node.position, transform.rotation) as GameObject;
+            waypoint.transform.parent = waypointContainer.transform;
+            waypoint.GetComponent<PlayerWaypoint>().SetNavNode(node);
+            waypoints.Add(waypoint);
         }
 
         void DestroyWaypoints()
