@@ -2,7 +2,8 @@
 using System.Collections;
 
 namespace ProceduralMaze
-{    
+{
+    [RequireComponent(typeof(PlayerCamera))]
     public class PlayerWaypointMovement : MonoBehaviour
     {
 
@@ -12,10 +13,14 @@ namespace ProceduralMaze
         PlayerNavigation playerNavigation;
         PlayerWaypoint currentWaypoint;
 
+        PlayerCamera playerCameraControl;
+
         void Start()
         {
             playerNavigation = FindObjectOfType<PlayerNavigation>();
-            if (playerNavigation == null) Debug.LogError("PlayerNavigation not found in scene");            
+            if (playerNavigation == null) Debug.LogError("PlayerNavigation not found in scene");
+
+            playerCameraControl = gameObject.GetComponent<PlayerCamera>();
         }                       
         
         void Update()
@@ -24,6 +29,7 @@ namespace ProceduralMaze
             UpdateGazeSelect();
             CheckForInput();
             UpdatePosition();
+            ApplyCameraEffects();
         }
 
         void UpdateGazeSelect()
@@ -59,9 +65,21 @@ namespace ProceduralMaze
         }
 
         void UpdatePosition()
-        {
+        {          
             Vector3 newPosition = Vector3.Lerp(transform.position, currentWaypoint.transform.position, speed * Time.deltaTime);
-            transform.position = newPosition;            
+            transform.position = newPosition;
+        }
+
+        void ApplyCameraEffects()
+        {
+            if ((transform.position - currentWaypoint.transform.position).sqrMagnitude > 0.05F)
+            {
+                playerCameraControl.EnableBlur();
+            }
+            else
+            {
+                playerCameraControl.DisableBlur();
+            }
         }
 
         bool CanMoveToWaypoint(PlayerWaypoint waypoint)
