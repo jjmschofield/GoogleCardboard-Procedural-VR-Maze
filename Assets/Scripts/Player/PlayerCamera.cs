@@ -1,34 +1,39 @@
 ﻿using UnityEngine;
-using System.Collections;
 using UnityStandardAssets.ImageEffects;
 
-public class PlayerCamera : MonoBehaviour {
+namespace ProceduralMaze
+{
+    public class PlayerCamera : MonoBehaviour {
         
-    Camera cam;
-    BlurOptimized camBlur;    
+        Camera activeCamera;
+        CameraEffects effects;    
 
-    void Update()
-    {         
-        if (cam == null)
-        {
-            cam = FindObjectOfType<GvrPostRender>().gameObject.GetComponent<Camera>();
-            if(cam != null)
+        void Update()
+        {         
+            if (activeCamera == null)
             {
-                camBlur = cam.gameObject.AddComponent<BlurOptimized>().GetComponent<BlurOptimized>();
-                camBlur.blurShader = Shader.Find("Hidden/FastBlur");
-                camBlur.enabled = false;
-            }            
-        }      
-    }
-    
-    public void EnableBlur()
-    {
-        camBlur.enabled = true;
-    }	
+                activeCamera = GetPlayerCamera();
+                effects = new CameraEffects(activeCamera);
+            }      
+        }
 
-    public void DisableBlur()
-    {        
-        camBlur.enabled = false;
-    }
+        Camera GetPlayerCamera()
+        {
+            GvrPostRender postRenderInstance = FindObjectOfType<GvrPostRender>();
 
+            if (postRenderInstance == null)
+            {
+                return Camera.main;
+            }
+            else
+            {
+                return postRenderInstance.gameObject.GetComponent<Camera>() as Camera;
+            }
+        }
+
+        public void Blur(bool state)
+        {
+            if (effects != null) effects.Blur(state);
+        }
+    }
 }

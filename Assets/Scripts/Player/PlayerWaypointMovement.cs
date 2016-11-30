@@ -74,11 +74,11 @@ namespace ProceduralMaze
         {
             if ((transform.position - currentWaypoint.transform.position).sqrMagnitude > 0.05F)
             {
-                playerCameraControl.EnableBlur();
+                playerCameraControl.Blur(true);
             }
             else
             {
-                playerCameraControl.DisableBlur();
+                playerCameraControl.Blur(false);
             }
         }
 
