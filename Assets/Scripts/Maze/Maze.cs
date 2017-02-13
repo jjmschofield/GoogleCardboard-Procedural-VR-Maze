@@ -5,8 +5,9 @@ using System.Collections.Generic;
 
 namespace ProceduralMaze
 {
-    [RequireComponent(typeof(MazeRenderer))]
+    [RequireComponent(typeof(MazeDebugRenderer))]
     [RequireComponent(typeof(MazeMeshGenerator))]
+    [RequireComponent(typeof(PlayerNavigation))]
     public class Maze : MonoBehaviour
     {
         public int width = 20;
@@ -14,6 +15,7 @@ namespace ProceduralMaze
         public float spacing = 1;
         public PositionalGraph pathGraph;
         public PositionalGraph wallGraph;
+        public PlayerNavigationGraph playerNavGraph;
         public List<MazeCell> cells;
 
         MazeMeshGenerator meshGenerator;
@@ -23,6 +25,7 @@ namespace ProceduralMaze
             CreateMaze();
             meshGenerator = gameObject.GetComponent<MazeMeshGenerator>();
             meshGenerator.UpdateMesh(cells, pathGraph, wallGraph);
+            CreatePlayerNavigation();
         }
 
         void CreateMaze()
@@ -34,9 +37,11 @@ namespace ProceduralMaze
             wallGraph = mazeGenerator.wallGraph;
         }
 
-        void Awake()
+        void CreatePlayerNavigation()
         {
-            
+            playerNavGraph = new PlayerNavigationGraph(pathGraph);
+            PlayerNavigation playerNavigation = gameObject.GetComponent<PlayerNavigation>();
+            playerNavigation.UpdateWaypoints(playerNavGraph.graph);
         }
 
 

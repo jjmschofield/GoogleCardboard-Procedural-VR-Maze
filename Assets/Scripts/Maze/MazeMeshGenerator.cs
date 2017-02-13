@@ -9,6 +9,7 @@ namespace ProceduralMaze
         public Material wallMaterial;
         public Material floorMaterial;
         public Material ceilingMaterial;
+        public int layer;
 
         public float wallHeight = 2.0F;
         public float wallWidth = 0.5F;
@@ -64,6 +65,7 @@ namespace ProceduralMaze
             meshObject.AddComponent<MeshRenderer>();
             meshObject.AddComponent<MeshCollider>();
             meshObject.GetComponent<MeshRenderer>().material = material;
+            meshObject.layer = layer;
             return meshObject;
         }
 
