@@ -9,6 +9,7 @@ namespace ProceduralMaze
         public Material defaultMaterial;
         public Material highlightedMaterial;
         public Material visitedMaterial;
+        public ParticleSystem highlightedParticles;
 
         bool isOccupied = false;
         bool hasBeenVisitied = false;
@@ -38,6 +39,17 @@ namespace ProceduralMaze
             if (isHighlighted)
             {
                 meshRenderer.material = highlightedMaterial;
+
+                if(highlightedParticles.emission.enabled == false)
+                {
+                    ParticleSystem.EmissionModule emission = highlightedParticles.emission;
+                    emission.enabled = true;
+                }               
+            }
+            else if(highlightedParticles.emission.enabled == true)
+            {
+                ParticleSystem.EmissionModule emission = highlightedParticles.emission;
+                emission.enabled = false;               
             }
 
             isHighlighted = false;
