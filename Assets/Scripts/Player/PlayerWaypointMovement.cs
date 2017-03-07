@@ -72,13 +72,13 @@ namespace ProceduralMaze
 
         void ApplyCameraEffects()
         {
-            if ((transform.position - currentWaypoint.transform.position).sqrMagnitude > 0.05F)
+            if ((transform.position - currentWaypoint.transform.position).sqrMagnitude > 0.005F)
             {
-                playerCameraControl.Blur(true);
+                playerCameraControl.Blink(true);
             }
             else
             {
-                playerCameraControl.Blur(false);
+                playerCameraControl.Blink(false);
             }
         }
 

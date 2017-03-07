@@ -4,20 +4,34 @@ using UnityStandardAssets.ImageEffects;
 namespace ProceduralMaze
 {
     public class PlayerCamera : MonoBehaviour {
-        
-        Camera activeCamera;
-        CameraEffects effects;    
+       
+        Camera mainCamera;
+        CameraEffects mainEffects;
+        Camera postCamera;
+        CameraEffects postEffects;    
+
+        void Start()
+        {
+            mainCamera = GetMainCamera();
+            mainEffects = new CameraEffects(mainCamera);
+        }
 
         void Update()
         {         
-            if (activeCamera == null)
+            if (postCamera == null)
             {
-                activeCamera = GetPlayerCamera();
-                effects = new CameraEffects(activeCamera);
+                postCamera = GetPostCamera();
+                postEffects = new CameraEffects(postCamera);
             }      
         }
 
-        Camera GetPlayerCamera()
+
+        Camera GetMainCamera()
+        {
+            return Camera.main;
+        }
+
+        Camera GetPostCamera()
         {
             GvrPostRender postRenderInstance = FindObjectOfType<GvrPostRender>();
 
@@ -33,7 +47,12 @@ namespace ProceduralMaze
 
         public void Blur(bool state)
         {
-            if (effects != null) effects.Blur(state);
+            if (postEffects != null) postEffects.Blur(state);
+        }
+
+        public void Blink(bool state)
+        {
+            mainEffects.Blink(state);
         }
     }
 }
