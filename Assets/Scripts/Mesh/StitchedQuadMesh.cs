@@ -48,7 +48,7 @@ namespace ProceduralMaze
             mesh.vertices = verts.ToArray();
             mesh.triangles = tris.ToArray();
             mesh.uv = uv.ToArray();
-            mesh.Optimize();
+            ;
             mesh.RecalculateBounds();
             mesh.RecalculateNormals();
         }
